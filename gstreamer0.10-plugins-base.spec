@@ -1,12 +1,12 @@
-%define version 0.10.12
-%define release %mkrel 2
+%define version 0.10.13
+%define release %mkrel 1
 %define         _glib2          2.2
 %define major 0.10
 %define majorminor 0.10
 %define bname gstreamer0.10
 %define name %bname-plugins-base
 %define libname %mklibname gstreamer-plugins-base %major
-%define gstver 0.10.11.1
+%define gstver 0.10.12.1
 %define build_libvisual 1
 
 Summary: 	GStreamer Streaming-media framework plug-ins
@@ -35,6 +35,7 @@ BuildRequires: nasm => 0.90
 BuildRequires: libcheck-devel
 BuildRequires: valgrind
 BuildRequires: libgstreamer-devel >= %gstver
+BuildRequires: gtk-doc
 %if %mdkversion > 200700
 BuildRequires: libmesaglu-devel
 BuildRequires: libxv-devel
@@ -131,6 +132,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/gstreamer-%{majorminor}/libgstvideotestsrc.so
 %{_libdir}/gstreamer-%{majorminor}/libgsttheora.so
 %{_libdir}/gstreamer-%{majorminor}/libgstogg.so
+%{_libdir}/gstreamer-%{majorminor}/libgstqueue2.so
+%{_libdir}/gstreamer-%{majorminor}/libgsturidecodebin.so
 %{_libdir}/gstreamer-%{majorminor}/libgstvideo4linux.so
 %{_libdir}/gstreamer-%{majorminor}/libgstvideorate.so
 %{_libdir}/gstreamer-%{majorminor}/libgstvideoscale.so
@@ -200,7 +203,9 @@ GStreamer support libraries header files.
 %_libdir/libgstrtp-%majorminor.so
 %_libdir/libgsttag-%majorminor.so
 %_libdir/libgstvideo-%majorminor.so
+%_datadir/gtk-doc/html/*
 ###
+
 
 
 ### GNOME VFS 2 ###
