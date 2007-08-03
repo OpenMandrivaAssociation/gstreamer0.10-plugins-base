@@ -1,4 +1,4 @@
-%define version 0.10.13
+%define version 0.10.14
 %define release %mkrel 1
 %define         _glib2          2.2
 %define major 0.10
@@ -6,7 +6,7 @@
 %define bname gstreamer0.10
 %define name %bname-plugins-base
 %define libname %mklibname gstreamer-plugins-base %major
-%define gstver 0.10.12.1
+%define gstver 0.10.13.1
 %define build_libvisual 1
 
 Summary: 	GStreamer Streaming-media framework plug-ins
@@ -159,7 +159,9 @@ the interfaces library.
 %_libdir/libgstpbutils-%majorminor.so.*
 %_libdir/libgstriff-%majorminor.so.*
 %_libdir/libgstrtp-%majorminor.so.*
+%_libdir/libgstrtsp-%majorminor.so.*
 %_libdir/libgsttag-%majorminor.so.*
+%_libdir/libgstsdp-%majorminor.so.*
 %_libdir/libgstvideo-%majorminor.so.*
 
 
@@ -189,6 +191,8 @@ GStreamer support libraries header files.
 %{_includedir}/gstreamer-%{majorminor}/gst/netbuffer
 %{_includedir}/gstreamer-%{majorminor}/gst/pbutils
 %{_includedir}/gstreamer-%{majorminor}/gst/riff
+%{_includedir}/gstreamer-%{majorminor}/gst/rtsp
+%{_includedir}/gstreamer-%{majorminor}/gst/sdp
 %{_includedir}/gstreamer-%{majorminor}/gst/tag/
 %{_includedir}/gstreamer-%{majorminor}/gst/video/
 %{_includedir}/gstreamer-%{majorminor}/gst/floatcast/
@@ -201,7 +205,9 @@ GStreamer support libraries header files.
 %_libdir/libgstpbutils-%majorminor.so
 %_libdir/libgstriff-%majorminor.so
 %_libdir/libgstrtp-%majorminor.so
+%_libdir/libgstrtsp-%majorminor.so
 %_libdir/libgsttag-%majorminor.so
+%_libdir/libgstsdp-%majorminor.so
 %_libdir/libgstvideo-%majorminor.so
 %_datadir/gtk-doc/html/*
 ###
