@@ -1,4 +1,4 @@
-%define version 0.10.14
+%define version 0.10.15
 %define release %mkrel 1
 %define         _glib2          2.2
 %define major 0.10
@@ -23,7 +23,7 @@ Provides:	%bname-plugin-libs
 Obsoletes:	%bname-plugin-libs
 #gw for the pixbuf plugin
 BuildRequires:  gtk+2-devel
-BuildRequires:  glib2-devel >= %_glib2 
+BuildRequires:  glib2-devel >= %_glib2
 BuildRequires: libpng-devel >= 1.2.4-4mdk
 BuildRequires: liboil-devel >= 0.3.6
 BuildRequires: libvorbis-devel >= 1.0-4mdk
