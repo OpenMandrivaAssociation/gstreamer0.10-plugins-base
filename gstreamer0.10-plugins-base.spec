@@ -19,6 +19,7 @@ Source: 	http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-
 # (cjw) disable a test that apparently fails on ppc (gnome bug #348114)
 Patch1:		gst-plugins-base-0.10.11-ppc.patch
 URL:            http://gstreamer.freedesktop.org/
+BuildRoot: 	%{_tmppath}/%{name}-%{version}-root 
 Provides:	%bname-plugin-libs
 Obsoletes:	%bname-plugin-libs
 #gw for the pixbuf plugin
