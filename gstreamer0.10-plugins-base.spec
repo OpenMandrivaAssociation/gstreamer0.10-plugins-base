@@ -40,7 +40,7 @@ BuildRequires: gtk-doc
 BuildRequires: libmesaglu-devel
 BuildRequires: libxv-devel
 %else
-BuildRequires: libMesaGLU-devel
+BuildRequires: mesaglu-devel
 BuildRequires: X11-devel
 %endif
 BuildRequires: libalsa-devel
