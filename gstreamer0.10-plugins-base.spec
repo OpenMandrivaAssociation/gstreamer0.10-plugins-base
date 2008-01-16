@@ -16,6 +16,8 @@ Release: 	%release
 License: 	LGPL
 Group: 		Sound
 Source: 	http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-%{version}.tar.bz2
+# gw from CVS, fix for upstream bug #497964 (tests fail with new theora)
+Patch: gst-plugins-base-0.10.15-new-theora.patch
 # (cjw) disable a test that apparently fails on ppc (gnome bug #348114)
 Patch1:		gst-plugins-base-0.10.11-ppc.patch
 URL:            http://gstreamer.freedesktop.org/
@@ -82,11 +84,17 @@ plugins, and helper libraries:
 
 %prep
 %setup -q -n gst-plugins-base-%{version}
+%patch -p1
 %patch1 -p1 -b .ppc
+#gw patch 0:
+aclocal -I common/m4 -I m4
+autoconf
+automake
 
 %build
 %configure2_5x --disable-dependency-tracking \
 	--enable-libvisual
+%make
 
 %check
 cd tests/check
@@ -152,17 +160,18 @@ the interfaces library.
 
 %files -n %libname
 %defattr(-, root, root)
-%_libdir/libgstaudio-%majorminor.so.*
-%_libdir/libgstcdda-%majorminor.so.*
-%_libdir/libgstinterfaces-%majorminor.so.*
-%_libdir/libgstnetbuffer-%majorminor.so.*
-%_libdir/libgstpbutils-%majorminor.so.*
-%_libdir/libgstriff-%majorminor.so.*
-%_libdir/libgstrtp-%majorminor.so.*
-%_libdir/libgstrtsp-%majorminor.so.*
-%_libdir/libgsttag-%majorminor.so.*
-%_libdir/libgstsdp-%majorminor.so.*
-%_libdir/libgstvideo-%majorminor.so.*
+%_libdir/libgstaudio-%majorminor.so.0*
+%_libdir/libgstcdda-%majorminor.so.0*
+%_libdir/libgstfft-%majorminor.so.0*
+%_libdir/libgstinterfaces-%majorminor.so.0*
+%_libdir/libgstnetbuffer-%majorminor.so.0*
+%_libdir/libgstpbutils-%majorminor.so.0*
+%_libdir/libgstriff-%majorminor.so.0*
+%_libdir/libgstrtp-%majorminor.so.0*
+%_libdir/libgstrtsp-%majorminor.so.0*
+%_libdir/libgsttag-%majorminor.so.0*
+%_libdir/libgstsdp-%majorminor.so.0*
+%_libdir/libgstvideo-%majorminor.so.0*
 
 
 %post -n %libname -p /sbin/ldconfig
@@ -187,6 +196,7 @@ GStreamer support libraries header files.
 %doc docs/libs/html docs/plugins/html
 %{_includedir}/gstreamer-%{majorminor}/gst/audio
 %{_includedir}/gstreamer-%{majorminor}/gst/cdda/
+%{_includedir}/gstreamer-%{majorminor}/gst/fft
 %{_includedir}/gstreamer-%{majorminor}/gst/interfaces
 %{_includedir}/gstreamer-%{majorminor}/gst/netbuffer
 %{_includedir}/gstreamer-%{majorminor}/gst/pbutils
@@ -200,6 +210,7 @@ GStreamer support libraries header files.
 %{_libdir}/pkgconfig/gstreamer-plugins-base-%majorminor.pc
 %_libdir/libgstaudio-%majorminor.so
 %_libdir/libgstcdda-%majorminor.so
+%_libdir/libgstfft-%majorminor.so
 %_libdir/libgstinterfaces-%majorminor.so
 %_libdir/libgstnetbuffer-%majorminor.so
 %_libdir/libgstpbutils-%majorminor.so
