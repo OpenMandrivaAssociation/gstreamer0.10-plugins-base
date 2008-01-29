@@ -1,12 +1,12 @@
-%define version 0.10.15
-%define release %mkrel 2
+%define version 0.10.16
+%define release %mkrel 1
 %define         _glib2          2.2
 %define major 0.10
 %define majorminor 0.10
 %define bname gstreamer0.10
 %define name %bname-plugins-base
 %define libname %mklibname gstreamer-plugins-base %major
-%define gstver 0.10.13.1
+%define gstver 0.10.16
 %define build_libvisual 1
 
 Summary: 	GStreamer Streaming-media framework plug-ins
@@ -16,8 +16,6 @@ Release: 	%release
 License: 	LGPL
 Group: 		Sound
 Source: 	http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-%{version}.tar.bz2
-# gw from CVS, fix for upstream bug #497964 (tests fail with new theora)
-Patch: gst-plugins-base-0.10.15-new-theora.patch
 # (cjw) disable a test that apparently fails on ppc (gnome bug #348114)
 Patch1:		gst-plugins-base-0.10.11-ppc.patch
 URL:            http://gstreamer.freedesktop.org/
@@ -48,6 +46,8 @@ BuildRequires: X11-devel
 BuildRequires: libalsa-devel
 #gw we need some fonts for the tests
 BuildRequires: fonts-ttf-dejavu
+# gw http://bugzilla.gnome.org/show_bug.cgi?id=512740
+BuildConflicts: %name < %version
 Provides:	%bname-audiosrc
 Provides:	%bname-audiosink
 Provides: %bname-alsa
@@ -84,12 +84,7 @@ plugins, and helper libraries:
 
 %prep
 %setup -q -n gst-plugins-base-%{version}
-%patch -p1
 %patch1 -p1 -b .ppc
-#gw patch 0:
-aclocal -I common/m4 -I m4
-autoconf
-automake
 
 %build
 %configure2_5x --disable-dependency-tracking \
