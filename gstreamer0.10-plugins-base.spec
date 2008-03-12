@@ -1,5 +1,5 @@
 %define version 0.10.17
-%define release %mkrel 1
+%define release %mkrel 2
 %define         _glib2          2.2
 %define major 0.10
 %define majorminor 0.10
@@ -58,6 +58,7 @@ Provides: %bname-vorbis
 Obsoletes: %bname-vorbis
 Provides: %bname-x11
 Obsoletes: %bname-x11
+Suggests: codeina
 
 
 %description
@@ -88,7 +89,7 @@ plugins, and helper libraries:
 
 %build
 %configure2_5x --disable-dependency-tracking \
-	--enable-libvisual
+	--enable-libvisual --with-install-plugins-helper="%{_bindir}/codeina"
 %make
 
 %check
