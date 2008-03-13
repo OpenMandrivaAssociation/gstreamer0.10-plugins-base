@@ -1,5 +1,5 @@
 %define version 0.10.17
-%define release %mkrel 2
+%define release %mkrel 3
 %define         _glib2          2.2
 %define major 0.10
 %define majorminor 0.10
@@ -89,6 +89,8 @@ plugins, and helper libraries:
 
 %build
 %configure2_5x --disable-dependency-tracking \
+  --with-package-name='Mandriva %name package' \
+  --with-package-origin='http://www.mandriva.com/' \
 	--enable-libvisual --with-install-plugins-helper="%{_bindir}/codeina"
 %make
 
