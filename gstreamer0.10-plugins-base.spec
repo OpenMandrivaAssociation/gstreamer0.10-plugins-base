@@ -1,12 +1,12 @@
-%define version 0.10.17
-%define release %mkrel 3
+%define version 0.10.19
+%define release %mkrel 1
 %define         _glib2          2.2
 %define major 0.10
 %define majorminor 0.10
 %define bname gstreamer0.10
 %define name %bname-plugins-base
 %define libname %mklibname gstreamer-plugins-base %major
-%define gstver 0.10.16
+%define gstver 0.10.17.1
 %define build_libvisual 1
 
 Summary: 	GStreamer Streaming-media framework plug-ins
@@ -46,8 +46,6 @@ BuildRequires: X11-devel
 BuildRequires: libalsa-devel
 #gw we need some fonts for the tests
 BuildRequires: fonts-ttf-dejavu
-# gw http://bugzilla.gnome.org/show_bug.cgi?id=512740
-BuildConflicts: %name < %version
 Provides:	%bname-audiosrc
 Provides:	%bname-audiosink
 Provides: %bname-alsa
