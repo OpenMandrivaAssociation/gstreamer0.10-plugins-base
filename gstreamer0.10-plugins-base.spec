@@ -1,6 +1,6 @@
 %define version 0.10.19
-%define release %mkrel 1
-%define         _glib2          2.2
+%define release %mkrel 2
+%define         _glib2          2.15.2
 %define major 0.10
 %define majorminor 0.10
 %define bname gstreamer0.10
@@ -87,6 +87,7 @@ plugins, and helper libraries:
 
 %build
 %configure2_5x --disable-dependency-tracking \
+  --enable-experimental \
   --with-package-name='Mandriva %name package' \
   --with-package-origin='http://www.mandriva.com/' \
 	--enable-libvisual --with-install-plugins-helper="%{_bindir}/codeina"
@@ -125,6 +126,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/gstreamer-%{majorminor}/libgstdecodebin.so
 %{_libdir}/gstreamer-%{majorminor}/libgstdecodebin2.so
 %{_libdir}/gstreamer-%{majorminor}/libgstgdp.so
+%{_libdir}/gstreamer-%{majorminor}/libgstgio.so
 %{_libdir}/gstreamer-%{majorminor}/libgstpango.so
 %{_libdir}/gstreamer-%{majorminor}/libgstplaybin.so
 %{_libdir}/gstreamer-%{majorminor}/libgstsubparse.so
