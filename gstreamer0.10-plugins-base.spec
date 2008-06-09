@@ -171,8 +171,12 @@ the interfaces library.
 %_libdir/libgstvideo-%majorminor.so.0*
 
 
+%if %mdkversion < 200900
 %post -n %libname -p /sbin/ldconfig
+%endif
+%if %mdkversion < 200900
 %postun -n %libname -p /sbin/ldconfig
+%endif
 
 %package -n %libname-devel
 Summary: 	GStreamer Plugin Library Headers
