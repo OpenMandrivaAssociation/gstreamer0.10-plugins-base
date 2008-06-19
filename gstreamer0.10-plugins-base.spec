@@ -1,12 +1,12 @@
-%define version 0.10.19
-%define release %mkrel 2
+%define version 0.10.20
+%define release %mkrel 1
 %define         _glib2          2.15.2
 %define major 0.10
 %define majorminor 0.10
 %define bname gstreamer0.10
 %define name %bname-plugins-base
 %define libname %mklibname gstreamer-plugins-base %major
-%define gstver 0.10.17.1
+%define gstver 0.10.19.1
 %define build_libvisual 1
 
 Summary: 	GStreamer Streaming-media framework plug-ins
@@ -83,7 +83,7 @@ plugins, and helper libraries:
 
 %prep
 %setup -q -n gst-plugins-base-%{version}
-%patch1 -p1 -b .ppc
+#%patch1 -p1 -b .ppc
 
 %build
 %configure2_5x --disable-dependency-tracking \
