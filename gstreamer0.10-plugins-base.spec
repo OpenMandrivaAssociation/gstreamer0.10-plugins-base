@@ -1,5 +1,5 @@
 %define version 0.10.20
-%define release %mkrel 1
+%define release %mkrel 2
 %define         _glib2          2.15.2
 %define major 0.10
 %define majorminor 0.10
@@ -16,8 +16,8 @@ Release: 	%release
 License: 	LGPL
 Group: 		Sound
 Source: 	http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-%{version}.tar.bz2
-# (cjw) disable a test that apparently fails on ppc (gnome bug #348114)
-Patch1:		gst-plugins-base-0.10.11-ppc.patch
+# (fc) 0.10.20-2mdv ensure translated strings are in UTF-8
+Patch0:		gst-plugins-base-0.10.20-utf8.patch
 URL:            http://gstreamer.freedesktop.org/
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-root 
 Provides:	%bname-plugin-libs
@@ -83,7 +83,7 @@ plugins, and helper libraries:
 
 %prep
 %setup -q -n gst-plugins-base-%{version}
-#%patch1 -p1 -b .ppc
+%patch0 -p1 -b .utf8
 
 %build
 %configure2_5x --disable-dependency-tracking \
