@@ -1,4 +1,4 @@
-%define version 0.10.21
+%define version 0.10.22
 %define release %mkrel 1
 %define         _glib2          2.15.2
 %define major 0.10
@@ -6,14 +6,16 @@
 %define bname gstreamer0.10
 %define name %bname-plugins-base
 %define libname %mklibname gstreamer-plugins-base %major
-%define gstver 0.10.20.1
+%define oldlibname  %mklibname gstapp0.10_ 0
+%define olddevelname %mklibname -d gstapp0.10_ 0
+%define gstver 0.10.21.1
 %define build_libvisual 1
 
 Summary: 	GStreamer Streaming-media framework plug-ins
 Name: 		%name
 Version: 	%version
 Release: 	%release
-License: 	LGPL
+License: 	LGPLv2+
 Group: 		Sound
 Source: 	http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-%{version}.tar.bz2
 URL:            http://gstreamer.freedesktop.org/
@@ -55,6 +57,7 @@ Obsoletes: %bname-vorbis
 Provides: %bname-x11
 Obsoletes: %bname-x11
 Suggests: codeina
+Conflicts: %bname-plugins-bad < 0.10.10
 
 
 %description
@@ -117,6 +120,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/gst-visualise-%majorminor.1*
 %{_libdir}/gstreamer-%{majorminor}/libgstffmpegcolorspace.so
 # non-core plugins without external dependencies
+%_libdir/gstreamer-%majorminor/libgstapp.so
 %{_libdir}/gstreamer-%{majorminor}/libgstaudioconvert.so
 %{_libdir}/gstreamer-%{majorminor}/libgstaudiorate.so
 %{_libdir}/gstreamer-%{majorminor}/libgstaudioresample.so
@@ -148,6 +152,7 @@ rm -rf $RPM_BUILD_ROOT
 %package -n %libname
 Group: 		System/Libraries
 Summary: 	GStreamer plugin libraries
+Obsoletes: %oldlibname
 
 %description -n %libname
 This package contain the basic audio and video playback library and
@@ -156,6 +161,7 @@ the interfaces library.
 %files -n %libname
 %defattr(-, root, root)
 %_libdir/libgstaudio-%majorminor.so.0*
+%_libdir/libgstapp-%majorminor.so.0*
 %_libdir/libgstcdda-%majorminor.so.0*
 %_libdir/libgstfft-%majorminor.so.0*
 %_libdir/libgstinterfaces-%majorminor.so.0*
@@ -186,6 +192,7 @@ Requires:	%name = %version
 Requires:	libgstreamer-devel >= %gstver
 Provides:	libgstreamer-plugins-base-devel = %version-%release
 Provides:	libgstreamer%majorminor-plugins-base-devel = %version-%release
+Obsoletes: %olddevelname
 
 %description -n %libname-devel
 GStreamer support libraries header files.
@@ -193,6 +200,7 @@ GStreamer support libraries header files.
 %files -n %libname-devel
 %defattr(-, root, root)
 %doc docs/libs/html docs/plugins/html
+%_includedir/gstreamer-%majorminor/gst/app/
 %{_includedir}/gstreamer-%{majorminor}/gst/audio
 %{_includedir}/gstreamer-%{majorminor}/gst/cdda/
 %{_includedir}/gstreamer-%{majorminor}/gst/fft
@@ -206,6 +214,7 @@ GStreamer support libraries header files.
 %{_includedir}/gstreamer-%{majorminor}/gst/video/
 %{_includedir}/gstreamer-%{majorminor}/gst/floatcast/
 %{_includedir}/gstreamer-%{majorminor}/gst/rtp
+%{_libdir}/pkgconfig/gstreamer-app-%majorminor.pc
 %{_libdir}/pkgconfig/gstreamer-audio-%majorminor.pc
 %{_libdir}/pkgconfig/gstreamer-cdda-%majorminor.pc
 %{_libdir}/pkgconfig/gstreamer-fft-%majorminor.pc
@@ -221,6 +230,7 @@ GStreamer support libraries header files.
 %{_libdir}/pkgconfig/gstreamer-tag-%majorminor.pc
 %{_libdir}/pkgconfig/gstreamer-video-%majorminor.pc
 %_libdir/libgstaudio-%majorminor.so
+%_libdir/libgstapp-%majorminor.so
 %_libdir/libgstcdda-%majorminor.so
 %_libdir/libgstfft-%majorminor.so
 %_libdir/libgstinterfaces-%majorminor.so
