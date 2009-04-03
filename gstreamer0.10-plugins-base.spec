@@ -86,7 +86,7 @@ plugins, and helper libraries:
 %prep
 %setup -q -n gst-plugins-base-%{version}
 
-%patch0 -p1 -b .cve-2009-0586
+%patch -p1 -b .cve-2009-0586
 
 %build
 %configure2_5x --disable-dependency-tracking \
