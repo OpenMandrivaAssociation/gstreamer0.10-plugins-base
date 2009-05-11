@@ -1,5 +1,5 @@
-%define version 0.10.22
-%define release %mkrel 3
+%define version 0.10.23
+%define release %mkrel 1
 %define         _glib2          2.15.2
 %define major 0.10
 %define majorminor 0.10
@@ -18,7 +18,6 @@ Release: 	%release
 License: 	LGPLv2+
 Group: 		Sound
 Source: 	http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-%{version}.tar.bz2
-Patch:		gstreamer0.10-plugins-base-CVE-2009-0586.patch
 URL:            http://gstreamer.freedesktop.org/
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-root 
 Provides:	%bname-plugin-libs
@@ -85,8 +84,6 @@ plugins, and helper libraries:
 
 %prep
 %setup -q -n gst-plugins-base-%{version}
-
-%patch -p1 -b .cve-2009-0586
 
 %build
 %configure2_5x --disable-dependency-tracking \
