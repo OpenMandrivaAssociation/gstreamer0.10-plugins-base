@@ -18,6 +18,7 @@ Release: 	%release
 License: 	LGPLv2+
 Group: 		Sound
 Source: 	http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-%{version}.tar.bz2
+Patch0: 	align.patch
 URL:            http://gstreamer.freedesktop.org/
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-root 
 Provides:	%bname-plugin-libs
@@ -84,6 +85,7 @@ plugins, and helper libraries:
 
 %prep
 %setup -q -n gst-plugins-base-%{version}
+%patch0 -p1 -b .align
 
 %build
 %configure2_5x --disable-dependency-tracking \
