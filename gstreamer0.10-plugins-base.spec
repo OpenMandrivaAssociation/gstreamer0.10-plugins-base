@@ -34,7 +34,9 @@ BuildRequires: libtheora-devel
 BuildRequires: nasm => 0.90
 %endif
 BuildRequires: libcheck-devel
+%ifnarch %arm %mips
 BuildRequires: valgrind
+%endif
 BuildRequires: libgstreamer-devel >= %gstver
 BuildRequires: gtk-doc
 %if %mdkversion > 200700
