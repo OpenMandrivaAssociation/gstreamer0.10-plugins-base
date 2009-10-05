@@ -1,5 +1,5 @@
-%define version 0.10.24
-%define release %mkrel 2
+%define version 0.10.25
+%define release %mkrel 1
 %define         _glib2          2.15.2
 %define major 0.10
 %define majorminor 0.10
@@ -8,7 +8,7 @@
 %define libname %mklibname gstreamer-plugins-base %major
 %define oldlibname  %mklibname gstapp0.10_ 0
 %define olddevelname %mklibname -d gstapp0.10_ 0
-%define gstver 0.10.23.1
+%define gstver 0.10.24.2
 %define build_libvisual 1
 
 Summary: 	GStreamer Streaming-media framework plug-ins
@@ -47,6 +47,7 @@ BuildRequires: mesaglu-devel
 BuildRequires: X11-devel
 %endif
 BuildRequires: libalsa-devel
+BuildRequires: gobject-introspection-devel
 #gw we need some fonts for the tests
 BuildRequires: fonts-ttf-dejavu
 Provides:	%bname-audiosrc
@@ -177,6 +178,18 @@ the interfaces library.
 %_libdir/libgsttag-%majorminor.so.0*
 %_libdir/libgstsdp-%majorminor.so.0*
 %_libdir/libgstvideo-%majorminor.so.0*
+%_libdir/girepository-1.0/GstApp-%majorminor.typelib
+%_libdir/girepository-1.0/GstAudio-%majorminor.typelib
+%_libdir/girepository-1.0/GstFft-%majorminor.typelib
+%_libdir/girepository-1.0/GstInterfaces-%majorminor.typelib
+%_libdir/girepository-1.0/GstNetbuffer-%majorminor.typelib
+%_libdir/girepository-1.0/GstPbutils-%majorminor.typelib
+%_libdir/girepository-1.0/GstRiff-%majorminor.typelib
+%_libdir/girepository-1.0/GstRtp-%majorminor.typelib
+%_libdir/girepository-1.0/GstRtsp-%majorminor.typelib
+%_libdir/girepository-1.0/GstSdp-%majorminor.typelib
+%_libdir/girepository-1.0/GstTag-%majorminor.typelib
+%_libdir/girepository-1.0/GstVideo-%majorminor.typelib
 
 
 %if %mdkversion < 200900
@@ -247,6 +260,18 @@ GStreamer support libraries header files.
 %_libdir/libgstsdp-%majorminor.so
 %_libdir/libgstvideo-%majorminor.so
 %_datadir/gtk-doc/html/*
+%_datadir/gir-1.0/GstApp-%majorminor.gir
+%_datadir/gir-1.0/GstAudio-%majorminor.gir
+%_datadir/gir-1.0/GstFft-%majorminor.gir
+%_datadir/gir-1.0/GstInterfaces-%majorminor.gir
+%_datadir/gir-1.0/GstNetbuffer-%majorminor.gir
+%_datadir/gir-1.0/GstPbutils-%majorminor.gir
+%_datadir/gir-1.0/GstRiff-%majorminor.gir
+%_datadir/gir-1.0/GstRtp-%majorminor.gir
+%_datadir/gir-1.0/GstRtsp-%majorminor.gir
+%_datadir/gir-1.0/GstSdp-%majorminor.gir
+%_datadir/gir-1.0/GstTag-%majorminor.gir
+%_datadir/gir-1.0/GstVideo-%majorminor.gir
 ###
 
 
