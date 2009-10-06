@@ -1,5 +1,5 @@
 %define version 0.10.25
-%define release %mkrel 1
+%define release %mkrel 2
 %define         _glib2          2.15.2
 %define major 0.10
 %define majorminor 0.10
@@ -158,6 +158,7 @@ rm -rf $RPM_BUILD_ROOT
 Group: 		System/Libraries
 Summary: 	GStreamer plugin libraries
 Obsoletes: %oldlibname
+Conflicts: gir-repository < 0.6.5-3
 
 %description -n %libname
 This package contain the basic audio and video playback library and
@@ -202,6 +203,7 @@ the interfaces library.
 %package -n %libname-devel
 Summary: 	GStreamer Plugin Library Headers
 Group: 		Development/C
+Conflicts: gir-repository < 0.6.5-3
 Requires: 	%{libname} = %{version}
 Requires:	%libname = %version
 # gw is required at build time for make check
