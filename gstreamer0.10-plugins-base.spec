@@ -1,5 +1,5 @@
 %define version 0.10.25
-%define release %mkrel 2
+%define release %mkrel 3
 %define         _glib2          2.15.2
 %define major 0.10
 %define majorminor 0.10
@@ -19,6 +19,11 @@ License: 	LGPLv2+
 Group: 		Sound
 Source: 	http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-%{version}.tar.bz2
 Patch0: 	align.patch
+#gw upstream patches for bug #55552
+Patch1:gst-plugins-base-de1db5ccbdc10a835a2dfdd5984892f3b0c9bcf4.patch
+Patch2:gst-plugins-base-d85dadc122d40608ee304516702b479fb79c8ed7.patch
+Patch3:gst-plugins-base-598c9376342b4f67012d1d418c090f432fc26d27.patch
+Patch4:gst-plugins-base-e72c3029c0e4674e3ce6d9770dc9de665e7a3793.patch
 URL:            http://gstreamer.freedesktop.org/
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-root 
 Provides:	%bname-plugin-libs
@@ -89,6 +94,10 @@ plugins, and helper libraries:
 %prep
 %setup -q -n gst-plugins-base-%{version}
 %patch0 -p1 -b .align
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
 %configure2_5x --disable-dependency-tracking \
