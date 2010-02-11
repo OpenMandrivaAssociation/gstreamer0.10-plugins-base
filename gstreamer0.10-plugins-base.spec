@@ -1,4 +1,4 @@
-%define version 0.10.25.2
+%define version 0.10.26
 %define release %mkrel 1
 %define         _glib2          2.15.2
 %define major 0.10
@@ -8,7 +8,7 @@
 %define libname %mklibname gstreamer-plugins-base %major
 %define oldlibname  %mklibname gstapp0.10_ 0
 %define olddevelname %mklibname -d gstapp0.10_ 0
-%define gstver 0.10.25.2
+%define gstver 0.10.26
 %define build_libvisual 1
 
 Summary: 	GStreamer Streaming-media framework plug-ins
