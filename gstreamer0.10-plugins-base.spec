@@ -1,4 +1,4 @@
-%define version 0.10.27
+%define version 0.10.28
 %define release %mkrel 1
 %define         _glib2          2.15.2
 %define major 0.10
@@ -8,7 +8,7 @@
 %define libname %mklibname gstreamer-plugins-base %major
 %define oldlibname  %mklibname gstapp0.10_ 0
 %define olddevelname %mklibname -d gstapp0.10_ 0
-%define gstver 0.10.26.3
+%define gstver 0.10.28
 %define build_libvisual 1
 
 Summary: 	GStreamer Streaming-media framework plug-ins
@@ -18,9 +18,6 @@ Release: 	%release
 License: 	LGPLv2+
 Group: 		Sound
 Source: 	http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-%{version}.tar.bz2
-#gw missing from the tarball
-#https://bugzilla.gnome.org/show_bug.cgi?id=610832
-Source1: qtgv-xoverlay.h
 Patch0: 	align.patch
 URL:            http://gstreamer.freedesktop.org/
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-root 
@@ -94,7 +91,6 @@ plugins, and helper libraries:
 %prep
 %setup -q -n gst-plugins-base-%{version}
 %patch0 -p1 -b .align
-cp -i %SOURCE1 tests/examples/overlay/
 
 %build
 %configure2_5x --disable-dependency-tracking \
