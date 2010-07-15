@@ -1,4 +1,4 @@
-%define version 0.10.29
+%define version 0.10.30
 %define release %mkrel 1
 %define         _glib2          2.15.2
 %define major 0.10
@@ -8,7 +8,7 @@
 %define libname %mklibname gstreamer-plugins-base %major
 %define oldlibname  %mklibname gstapp0.10_ 0
 %define olddevelname %mklibname -d gstapp0.10_ 0
-%define gstver 0.10.29
+%define gstver 0.10.30
 %define build_libvisual 1
 
 Summary: 	GStreamer Streaming-media framework plug-ins
@@ -29,7 +29,7 @@ BuildRequires:  glib2-devel >= %_glib2
 #gw qt example
 BuildRequires: qt4-devel  
 BuildRequires: libpng-devel >= 1.2.4-4mdk
-BuildRequires: liboil-devel >= 0.3.6
+BuildRequires: liborc-devel >= 0.4.5
 BuildRequires: libvorbis-devel >= 1.0-4mdk
 BuildRequires: libtheora-devel
 %ifarch %ix86
