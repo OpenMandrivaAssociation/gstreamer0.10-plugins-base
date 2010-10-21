@@ -1,5 +1,5 @@
-%define version 0.10.30
-%define release %mkrel 3
+%define version 0.10.30.2
+%define release %mkrel 1
 %define         _glib2          2.15.2
 %define major 0.10
 %define majorminor 0.10
@@ -8,7 +8,7 @@
 %define libname %mklibname gstreamer-plugins-base %major
 %define oldlibname  %mklibname gstapp0.10_ 0
 %define olddevelname %mklibname -d gstapp0.10_ 0
-%define gstver 0.10.30
+%define gstver 0.10.30.2
 %define build_libvisual 1
 
 Summary: 	GStreamer Streaming-media framework plug-ins
@@ -19,8 +19,6 @@ License: 	LGPLv2+
 Group: 		Sound
 Source: 	http://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-%{version}.tar.bz2
 Patch0: 	align.patch
-Patch1: gst-plugins-base-use-cairo-instead-of-gdk.patch
-Patch2: gstreamer-0.10.30-fix-makefiles.patch
 URL:            http://gstreamer.freedesktop.org/
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-root 
 Provides:	%bname-plugin-libs
@@ -93,7 +91,7 @@ plugins, and helper libraries:
 %prep
 %setup -q -n gst-plugins-base-%{version}
 %apply_patches
-automake
+#automake
 
 %build
 %configure2_5x --disable-dependency-tracking \
@@ -126,6 +124,7 @@ rm -rf $RPM_BUILD_ROOT
 %files -f gst-plugins-base-%majorminor.lang
 %defattr(-, root, root)
 %doc AUTHORS COPYING README NEWS
+%{_bindir}/gst-discoverer
 %{_bindir}/gst-visualise-%majorminor
 %{_mandir}/man1/gst-visualise-%majorminor.1*
 %{_libdir}/gstreamer-%{majorminor}/libgstffmpegcolorspace.so
