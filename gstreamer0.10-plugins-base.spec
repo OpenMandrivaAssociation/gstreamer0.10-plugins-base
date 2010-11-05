@@ -1,5 +1,5 @@
 %define version 0.10.30.2
-%define release %mkrel 2
+%define release %mkrel 3
 %define         _glib2          2.15.2
 %define major 0.10
 %define majorminor 0.10
@@ -62,7 +62,7 @@ Provides: %bname-vorbis
 Obsoletes: %bname-vorbis
 Provides: %bname-x11
 Obsoletes: %bname-x11
-Suggests: packagekit-gstreamer-plugin
+Suggests: gst-install-plugins-helper
 Conflicts: %bname-plugins-bad < 0.10.10
 
 
