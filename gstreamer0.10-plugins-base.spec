@@ -1,5 +1,5 @@
 %define version 0.10.30.2
-%define release %mkrel 1
+%define release %mkrel 2
 %define         _glib2          2.15.2
 %define major 0.10
 %define majorminor 0.10
@@ -62,7 +62,7 @@ Provides: %bname-vorbis
 Obsoletes: %bname-vorbis
 Provides: %bname-x11
 Obsoletes: %bname-x11
-Suggests: codeina
+Suggests: packagekit-gstreamer-plugin
 Conflicts: %bname-plugins-bad < 0.10.10
 
 
@@ -98,7 +98,7 @@ plugins, and helper libraries:
   --enable-experimental \
   --with-package-name='Mandriva %name package' \
   --with-package-origin='http://www.mandriva.com/' \
-	--enable-libvisual --with-install-plugins-helper="%{_bindir}/codeina"
+  --enable-libvisual
 %make
 
 %check
