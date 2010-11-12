@@ -1,5 +1,5 @@
-%define version 0.10.30.2
-%define release %mkrel 3
+%define version 0.10.30.4
+%define release %mkrel 1
 %define         _glib2          2.15.2
 %define major 0.10
 %define majorminor 0.10
@@ -124,7 +124,7 @@ rm -rf $RPM_BUILD_ROOT
 %files -f gst-plugins-base-%majorminor.lang
 %defattr(-, root, root)
 %doc AUTHORS COPYING README NEWS
-%{_bindir}/gst-discoverer
+%{_bindir}/gst-discoverer-%majorminor
 %{_bindir}/gst-visualise-%majorminor
 %{_mandir}/man1/gst-visualise-%majorminor.1*
 %{_libdir}/gstreamer-%{majorminor}/libgstffmpegcolorspace.so
