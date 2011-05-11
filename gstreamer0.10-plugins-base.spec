@@ -149,7 +149,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/gstreamer-%{majorminor}/libgstvideotestsrc.so
 %{_libdir}/gstreamer-%{majorminor}/libgsttheora.so
 %{_libdir}/gstreamer-%{majorminor}/libgstogg.so
+%if %mdkversion < 201100
 %{_libdir}/gstreamer-%{majorminor}/libgstvideo4linux.so
+%endif
 %{_libdir}/gstreamer-%{majorminor}/libgstvideorate.so
 %{_libdir}/gstreamer-%{majorminor}/libgstvideoscale.so
 %{_libdir}/gstreamer-%{majorminor}/libgstvorbis.so
