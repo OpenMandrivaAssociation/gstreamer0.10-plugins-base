@@ -8,7 +8,7 @@
 %define libname %mklibname gstreamer-plugins-base %major
 %define oldlibname  %mklibname gstapp0.10_ 0
 %define olddevelname %mklibname -d gstapp0.10_ 0
-%define gstver 0.10.32
+%define gstver 0.10.33
 %define build_libvisual 1
 
 Summary: 	GStreamer Streaming-media framework plug-ins
