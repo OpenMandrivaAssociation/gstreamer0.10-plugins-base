@@ -1,70 +1,65 @@
-%define version 0.10.35
-%define release %mkrel 1
-%define         _glib2          2.15.2
-%define major 0.10
-%define majorminor 0.10
 %define bname gstreamer0.10
-%define name %bname-plugins-base
-%define libname %mklibname gstreamer-plugins-base %major
+%define name %{bname}-plugins-base
+
+%define major 0
+%define api 0.10
+%define libname		%mklibname gstreamer-plugins-base %{api} %{major}
+%define develname	%mklibname gstreamer-plugins-base %{api} -d
+%define girname		%mklibname gstreamer-plugins-base-gir %{api}
+
 %define oldlibname  %mklibname gstapp0.10_ 0
 %define olddevelname %mklibname -d gstapp0.10_ 0
-%define gstver 0.10.34
+
 %define build_libvisual 1
+%define build_docs 0
+%define build_qtexamples 0
+%define enable_check 0
 
 Summary: 	GStreamer Streaming-media framework plug-ins
-Name: 		%name
-Version: 	%version
-Release: 	%release
+Name: 		%{bname}-plugins-base
+Version: 	0.10.35
+Release: 	2
 License: 	LGPLv2+
 Group: 		Sound
-Source: 	ftp://ftp.gnome.org/pub/GNOME/sources/gst-plugins-base/gst-plugins-base-%{version}.tar.xz
+URL:		http://gstreamer.freedesktop.org/
+Source0: 	ftp://ftp.gnome.org/pub/GNOME/sources/gst-plugins-base/gst-plugins-base-%{version}.tar.xz
 Patch0: 	align.patch
-URL:            http://gstreamer.freedesktop.org/
-BuildRoot: 	%{_tmppath}/%{name}-%{version}-root 
-Provides:	%bname-plugin-libs
-Obsoletes:	%bname-plugin-libs
-#gw for the pixbuf plugin
-BuildRequires:  gtk+2-devel
-BuildRequires:  glib2-devel >= %_glib2
-#gw qt example
-BuildRequires: qt4-devel  
-BuildRequires: libpng-devel >= 1.2.4-4mdk
+
+BuildRequires: gtk+2-devel
+BuildRequires: glib2-devel
+BuildRequires: gnome-vfs2-devel > 1.9.4.00
+BuildRequires: libcdda-devel
+BuildRequires: libpng-devel
 BuildRequires: liborc-devel >= 0.4.5
-BuildRequires: libvorbis-devel >= 1.0-4mdk
+BuildRequires: libvorbis-devel
 BuildRequires: libtheora-devel
+BuildRequires: libcheck-devel
+BuildRequires: libgstreamer-devel >= 0.10.34
+BuildRequires: libmesaglu-devel
+BuildRequires: libxv-devel
+BuildRequires: libalsa-devel
+BuildRequires: gobject-introspection-devel
+%if %{build_libvisual}
+BuildRequires: libvisual-devel >= 0.4
+%endif
 %ifarch %ix86
 BuildRequires: nasm => 0.90
 %endif
-BuildRequires: libcheck-devel
 %ifnarch %arm %mips
 BuildRequires: valgrind
 %endif
-BuildRequires: libgstreamer-devel >= %gstver
-BuildRequires: gtk-doc
-%if %mdkversion > 200700
-BuildRequires: libmesaglu-devel
-BuildRequires: libxv-devel
-%else
-BuildRequires: mesaglu-devel
-BuildRequires: X11-devel
+%if %{build_qtexamples}
+BuildRequires:	qt4-devel
 %endif
-BuildRequires: libalsa-devel
-BuildRequires: gobject-introspection-devel
+%if %{build_docs}
+BuildRequires: gtk-doc
+%endif
+%if %{enable_check}
 #gw we need some fonts for the tests
 BuildRequires: fonts-ttf-dejavu
-Provides:	%bname-audiosrc
-Provides:	%bname-audiosink
-Provides: %bname-alsa
-Obsoletes: %bname-alsa
-Provides: %bname-plugins
-Obsoletes: %bname-plugins
-Provides: %bname-vorbis
-Obsoletes: %bname-vorbis
-Provides: %bname-x11
-Obsoletes: %bname-x11
+%endif
 Suggests: gst-install-plugins-helper
-Conflicts: %bname-plugins-bad < 0.10.10
-
+Conflicts: %{bname}-plugins-bad < 0.10.10
 
 %description
 GStreamer is a streaming-media framework, based on graphs of filters which
@@ -88,245 +83,229 @@ plugins, and helper libraries:
  * video processing: ffmpegcolorspace
  * aggregate elements: decodebin, playbin
 
-%prep
-%setup -q -n gst-plugins-base-%{version}
-%apply_patches
-
-%build
-%configure2_5x --disable-dependency-tracking \
-  --enable-experimental \
-  --with-package-name='Mandriva %name package' \
-  --with-package-origin='http://www.mandriva.com/' \
-  --enable-libvisual
-%make
-
-%check
-cd tests/check
-#gw check fail with a gconf error in 0.10.21
-#make check
-
-%install
-rm -rf %buildroot gst-plugins-base-%majorminor.lang
-GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1 %makeinstall_std
-%find_lang gst-plugins-base-%majorminor
-# Clean out files that should not be part of the rpm.
-# This is the recommended way of dealing with it for RH8
-rm -f %{buildroot}%{_libdir}/gstreamer-%{majorminor}/*.la
-rm -f %{buildroot}%{_libdir}/gstreamer-%{majorminor}/*.a
-rm -f %{buildroot}%{_libdir}/*.a
-rm -f %{buildroot}%{_libdir}/*.la
-
-%clean
-rm -rf %{buildroot}
-
-
-%files -f gst-plugins-base-%majorminor.lang
-%defattr(-, root, root)
-%doc AUTHORS COPYING README NEWS
-%{_bindir}/gst-discoverer-%majorminor
-%{_bindir}/gst-visualise-%majorminor
-%{_mandir}/man1/gst-visualise-%majorminor.1*
-%{_libdir}/gstreamer-%{majorminor}/libgstffmpegcolorspace.so
-# non-core plugins without external dependencies
-%_libdir/gstreamer-%majorminor/libgstapp.so
-%{_libdir}/gstreamer-%{majorminor}/libgstaudioconvert.so
-%{_libdir}/gstreamer-%{majorminor}/libgstaudiorate.so
-%{_libdir}/gstreamer-%{majorminor}/libgstaudioresample.so
-%{_libdir}/gstreamer-%{majorminor}/libgstaudiotestsrc.so
-%{_libdir}/gstreamer-%{majorminor}/libgstdecodebin.so
-%{_libdir}/gstreamer-%{majorminor}/libgstdecodebin2.so
-%{_libdir}/gstreamer-%{majorminor}/libgstencodebin.so
-%{_libdir}/gstreamer-%{majorminor}/libgstgdp.so
-%{_libdir}/gstreamer-%{majorminor}/libgstgio.so
-%{_libdir}/gstreamer-%{majorminor}/libgstpango.so
-%{_libdir}/gstreamer-%{majorminor}/libgstplaybin.so
-%{_libdir}/gstreamer-%{majorminor}/libgstsubparse.so
-#%{_libdir}/gstreamer-%{majorminor}/libgstsinesrc.so
-%{_libdir}/gstreamer-%{majorminor}/libgsttcp.so
-%{_libdir}/gstreamer-%{majorminor}/libgstvolume.so
-%{_libdir}/gstreamer-%{majorminor}/libgstadder.so
-%{_libdir}/gstreamer-%{majorminor}/libgsttypefindfunctions.so
-%{_libdir}/gstreamer-%{majorminor}/libgstvideotestsrc.so
-%{_libdir}/gstreamer-%{majorminor}/libgsttheora.so
-%{_libdir}/gstreamer-%{majorminor}/libgstogg.so
-%if %mdkversion < 201100
-%{_libdir}/gstreamer-%{majorminor}/libgstvideo4linux.so
-%endif
-%{_libdir}/gstreamer-%{majorminor}/libgstvideorate.so
-%{_libdir}/gstreamer-%{majorminor}/libgstvideoscale.so
-%{_libdir}/gstreamer-%{majorminor}/libgstvorbis.so
-%{_libdir}/gstreamer-%{majorminor}/libgstximagesink.so
-%{_libdir}/gstreamer-%{majorminor}/libgstxvimagesink.so
-%{_libdir}/gstreamer-%{majorminor}/libgstalsa.so
-
-%package -n %libname
+%package -n %{libname}
 Group: 		System/Libraries
 Summary: 	GStreamer plugin libraries
-Obsoletes: %oldlibname
-Conflicts: gir-repository < 0.6.5-3
+Obsoletes:  %mklibname gstreamer-plugins-base0.10
+Obsoletes:	%oldlibname
 
-%description -n %libname
+%description -n %{libname}
 This package contain the basic audio and video playback library and
 the interfaces library.
 
-%files -n %libname
-%defattr(-, root, root)
-%_libdir/libgstaudio-%majorminor.so.0*
-%_libdir/libgstapp-%majorminor.so.0*
-%_libdir/libgstcdda-%majorminor.so.0*
-%_libdir/libgstfft-%majorminor.so.0*
-%_libdir/libgstinterfaces-%majorminor.so.0*
-%_libdir/libgstnetbuffer-%majorminor.so.0*
-%_libdir/libgstpbutils-%majorminor.so.0*
-%_libdir/libgstriff-%majorminor.so.0*
-%_libdir/libgstrtp-%majorminor.so.0*
-%_libdir/libgstrtsp-%majorminor.so.0*
-%_libdir/libgsttag-%majorminor.so.0*
-%_libdir/libgstsdp-%majorminor.so.0*
-%_libdir/libgstvideo-%majorminor.so.0*
-%_libdir/girepository-1.0/GstApp-%majorminor.typelib
-%_libdir/girepository-1.0/GstAudio-%majorminor.typelib
-%_libdir/girepository-1.0/GstFft-%majorminor.typelib
-%_libdir/girepository-1.0/GstInterfaces-%majorminor.typelib
-%_libdir/girepository-1.0/GstNetbuffer-%majorminor.typelib
-%_libdir/girepository-1.0/GstPbutils-%majorminor.typelib
-%_libdir/girepository-1.0/GstRiff-%majorminor.typelib
-%_libdir/girepository-1.0/GstRtp-%majorminor.typelib
-%_libdir/girepository-1.0/GstRtsp-%majorminor.typelib
-%_libdir/girepository-1.0/GstSdp-%majorminor.typelib
-%_libdir/girepository-1.0/GstTag-%majorminor.typelib
-%_libdir/girepository-1.0/GstVideo-%majorminor.typelib
+%package -n %{girname}
+Summary:    GObject Introspection interface libraries for %{name}
+Group:      System/Libraries
+Requires:   %{libname} = %{version}-%{release}
+Conflicts:  %mklibname gstreamer-plugins-base 0.10 < 0.10.35-2
+Conflicts:  gir-repository < 0.6.5-3
 
+%description -n %{girname}
+GObject Introspection interface libraries for %{name}.
 
-%if %mdkversion < 200900
-%post -n %libname -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %libname -p /sbin/ldconfig
-%endif
-
-%package -n %libname-devel
+%package -n %{develname}
 Summary: 	GStreamer Plugin Library Headers
 Group: 		Development/C
-Conflicts: gir-repository < 0.6.5-3
-Requires: 	%{libname} = %{version}
-Requires:	%libname = %version
+Requires: 	%{libname} = %{version}-%{release}
+%if %{enable_check}
 # gw is required at build time for make check
-Requires:	%name = %version
-Requires:	libgstreamer-devel >= %gstver
-Provides:	libgstreamer-plugins-base-devel = %version-%release
-Provides:	libgstreamer%majorminor-plugins-base-devel = %version-%release
-Obsoletes: %olddevelname
+Requires:	%{name} = %{version}-%{release}
+%endif
+Provides:	libgstreamer-plugins-base-devel = %{version}-%{release}
+Provides:	libgstreamer%{api}-plugins-base-devel = %{version}-%{release}
+Conflicts:	gir-repository < 0.6.5-3
+Obsoletes:	%olddevelname
 
-%description -n %libname-devel
+%description -n %{develname}
 GStreamer support libraries header files.
 
-%files -n %libname-devel
-%defattr(-, root, root)
-%doc docs/libs/html docs/plugins/html
-%_includedir/gstreamer-%majorminor/gst/app/
-%{_includedir}/gstreamer-%{majorminor}/gst/audio
-%{_includedir}/gstreamer-%{majorminor}/gst/cdda/
-%{_includedir}/gstreamer-%{majorminor}/gst/fft
-%{_includedir}/gstreamer-%{majorminor}/gst/interfaces
-%{_includedir}/gstreamer-%{majorminor}/gst/netbuffer
-%{_includedir}/gstreamer-%{majorminor}/gst/pbutils
-%{_includedir}/gstreamer-%{majorminor}/gst/riff
-%{_includedir}/gstreamer-%{majorminor}/gst/rtsp
-%{_includedir}/gstreamer-%{majorminor}/gst/sdp
-%{_includedir}/gstreamer-%{majorminor}/gst/tag/
-%{_includedir}/gstreamer-%{majorminor}/gst/video/
-%{_includedir}/gstreamer-%{majorminor}/gst/floatcast/
-%{_includedir}/gstreamer-%{majorminor}/gst/rtp
-%{_libdir}/pkgconfig/gstreamer-app-%majorminor.pc
-%{_libdir}/pkgconfig/gstreamer-audio-%majorminor.pc
-%{_libdir}/pkgconfig/gstreamer-cdda-%majorminor.pc
-%{_libdir}/pkgconfig/gstreamer-fft-%majorminor.pc
-%{_libdir}/pkgconfig/gstreamer-floatcast-%majorminor.pc
-%{_libdir}/pkgconfig/gstreamer-interfaces-%majorminor.pc
-%{_libdir}/pkgconfig/gstreamer-netbuffer-%majorminor.pc
-%{_libdir}/pkgconfig/gstreamer-pbutils-%majorminor.pc
-%{_libdir}/pkgconfig/gstreamer-plugins-base-%majorminor.pc
-%{_libdir}/pkgconfig/gstreamer-riff-%majorminor.pc
-%{_libdir}/pkgconfig/gstreamer-rtp-%majorminor.pc
-%{_libdir}/pkgconfig/gstreamer-rtsp-%majorminor.pc
-%{_libdir}/pkgconfig/gstreamer-sdp-%majorminor.pc
-%{_libdir}/pkgconfig/gstreamer-tag-%majorminor.pc
-%{_libdir}/pkgconfig/gstreamer-video-%majorminor.pc
-%_libdir/libgstaudio-%majorminor.so
-%_libdir/libgstapp-%majorminor.so
-%_libdir/libgstcdda-%majorminor.so
-%_libdir/libgstfft-%majorminor.so
-%_libdir/libgstinterfaces-%majorminor.so
-%_libdir/libgstnetbuffer-%majorminor.so
-%_libdir/libgstpbutils-%majorminor.so
-%_libdir/libgstriff-%majorminor.so
-%_libdir/libgstrtp-%majorminor.so
-%_libdir/libgstrtsp-%majorminor.so
-%_libdir/libgsttag-%majorminor.so
-%_libdir/libgstsdp-%majorminor.so
-%_libdir/libgstvideo-%majorminor.so
-%_datadir/gtk-doc/html/*
-%_datadir/gir-1.0/GstApp-%majorminor.gir
-%_datadir/gir-1.0/GstAudio-%majorminor.gir
-%_datadir/gir-1.0/GstFft-%majorminor.gir
-%_datadir/gir-1.0/GstInterfaces-%majorminor.gir
-%_datadir/gir-1.0/GstNetbuffer-%majorminor.gir
-%_datadir/gir-1.0/GstPbutils-%majorminor.gir
-%_datadir/gir-1.0/GstRiff-%majorminor.gir
-%_datadir/gir-1.0/GstRtp-%majorminor.gir
-%_datadir/gir-1.0/GstRtsp-%majorminor.gir
-%_datadir/gir-1.0/GstSdp-%majorminor.gir
-%_datadir/gir-1.0/GstTag-%majorminor.gir
-%_datadir/gir-1.0/GstVideo-%majorminor.gir
-###
+%package -n %{bname}-gnomevfs
+Summary:	GStreamer plug-ins for GNOME VFS input and output
+Group:		System/Libraries
+Requires:	gnome-vfs2 > 1.9.4.00
+Requires: 	%{name} = %{version}-%{release}
 
-
-
-### GNOME VFS 2 ###
-%package -n %bname-gnomevfs
-Summary: GStreamer plug-ins for GNOME VFS input and output
-Group: System/Libraries
-Requires: gnome-vfs2 > 1.9.4.00
-Requires: %bname-plugins-base = %{version}
-BuildRequires: gnome-vfs2-devel > 1.9.4.00
-
-%description -n %bname-gnomevfs
+%description -n %{bname}-gnomevfs
 Plug-Ins for reading and writing through GNOME VFS.
 
-%files -n %bname-gnomevfs
-%defattr(-, root, root)
-%{_libdir}/gstreamer-%{majorminor}/libgstgnomevfs.so
+%package -n %{bname}-cdparanoia
+Summary:	Gstreamer plugin for CD audio input using CDParanoia IV
+Group:		Sound
+Requires:	%{name} = %{version}-%{release}
 
-
-### CDPARANOIA ###
-%package -n %bname-cdparanoia
-Summary: Gstreamer plugin for CD audio input using CDParanoia IV
-Group: Sound
-Requires: %name = %{version}
-BuildRequires: libcdda-devel
-
-%description -n %bname-cdparanoia
+%description -n %{bname}-cdparanoia
 Plugin for ripping audio tracks using cdparanoia under GStreamer
 
-%files -n %bname-cdparanoia
-%defattr(-, root, root)
-%{_libdir}/gstreamer-%{majorminor}/libgstcdparanoia.so
+%if %{build_libvisual}
+%package -n %{bname}-libvisual
+Summary:	GStreamer visualisations plug-in based on libvisual
+Group:		Video
+Requires:	%{name} = %{version}-%{release}
 
-%if %build_libvisual
-%package -n %bname-libvisual
-Summary: GStreamer visualisations plug-in based on libvisual
-Group: Video
-Requires: %name = %{version}
-BuildRequires: libvisual-devel >= 0.4
-
-%description -n %bname-libvisual
+%description -n %{bname}-libvisual
 This plugin makes visualisations based on libvisual available for
 GStreamer applications.
-
-%files -n %bname-libvisual
-%defattr(-, root, root)
-%{_libdir}/gstreamer-%{majorminor}/libgstlibvisual.so
 %endif
 
+%prep
+%setup -qn gst-plugins-base-%{version}
+%apply_patches
+
+%build
+%configure2_5x \
+	--disable-static \
+	--disable-dependency-tracking \
+	--enable-experimental \
+	--with-package-name='Mandriva %{name} package' \
+	--with-package-origin='http://www.mandriva.com/' \
+	--enable-libvisual
+
+%make
+
+%if %{enable_check}
+%check
+cd tests/check
+#gw check fail with a gconf error in 0.10.21
+%make check
+%endif
+
+%install
+rm -rf %{buildroot} gst-plugins-base-%{api}.lang
+%makeinstall_std
+%find_lang gst-plugins-base-%{api}
+
+%files -f gst-plugins-base-%{api}.lang
+%doc AUTHORS COPYING README NEWS
+%{_bindir}/gst-discoverer-%{api}
+%{_bindir}/gst-visualise-%{api}
+%{_mandir}/man1/gst-visualise-%{api}.1*
+%{_libdir}/gstreamer-%{api}/libgstffmpegcolorspace.so
+# non-core plugins without external dependencies
+%{_libdir}/gstreamer-%{api}/libgstapp.so
+%{_libdir}/gstreamer-%{api}/libgstaudioconvert.so
+%{_libdir}/gstreamer-%{api}/libgstaudiorate.so
+%{_libdir}/gstreamer-%{api}/libgstaudioresample.so
+%{_libdir}/gstreamer-%{api}/libgstaudiotestsrc.so
+%{_libdir}/gstreamer-%{api}/libgstdecodebin.so
+%{_libdir}/gstreamer-%{api}/libgstdecodebin2.so
+%{_libdir}/gstreamer-%{api}/libgstencodebin.so
+%{_libdir}/gstreamer-%{api}/libgstgdp.so
+%{_libdir}/gstreamer-%{api}/libgstgio.so
+%{_libdir}/gstreamer-%{api}/libgstpango.so
+%{_libdir}/gstreamer-%{api}/libgstplaybin.so
+%{_libdir}/gstreamer-%{api}/libgstsubparse.so
+%{_libdir}/gstreamer-%{api}/libgsttcp.so
+%{_libdir}/gstreamer-%{api}/libgstvolume.so
+%{_libdir}/gstreamer-%{api}/libgstadder.so
+%{_libdir}/gstreamer-%{api}/libgsttypefindfunctions.so
+%{_libdir}/gstreamer-%{api}/libgstvideotestsrc.so
+%{_libdir}/gstreamer-%{api}/libgsttheora.so
+%{_libdir}/gstreamer-%{api}/libgstogg.so
+%if %mdkversion < 201100
+%{_libdir}/gstreamer-%{api}/libgstvideo4linux.so
+%endif
+%{_libdir}/gstreamer-%{api}/libgstvideorate.so
+%{_libdir}/gstreamer-%{api}/libgstvideoscale.so
+%{_libdir}/gstreamer-%{api}/libgstvorbis.so
+%{_libdir}/gstreamer-%{api}/libgstximagesink.so
+%{_libdir}/gstreamer-%{api}/libgstxvimagesink.so
+%{_libdir}/gstreamer-%{api}/libgstalsa.so
+
+%files -n %{libname}
+%{_libdir}/libgstaudio-%{api}.so.%{major}*
+%{_libdir}/libgstapp-%{api}.so.%{major}*
+%{_libdir}/libgstcdda-%{api}.so.%{major}*
+%{_libdir}/libgstfft-%{api}.so.%{major}*
+%{_libdir}/libgstinterfaces-%{api}.so.%{major}*
+%{_libdir}/libgstnetbuffer-%{api}.so.%{major}*
+%{_libdir}/libgstpbutils-%{api}.so.%{major}*
+%{_libdir}/libgstriff-%{api}.so.%{major}*
+%{_libdir}/libgstrtp-%{api}.so.%{major}*
+%{_libdir}/libgstrtsp-%{api}.so.%{major}*
+%{_libdir}/libgsttag-%{api}.so.%{major}*
+%{_libdir}/libgstsdp-%{api}.so.%{major}*
+%{_libdir}/libgstvideo-%{api}.so.%{major}*
+
+%files -n %{girname}
+%{_libdir}/girepository-1.0/GstApp-%{api}.typelib
+%{_libdir}/girepository-1.0/GstAudio-%{api}.typelib
+%{_libdir}/girepository-1.0/GstFft-%{api}.typelib
+%{_libdir}/girepository-1.0/GstInterfaces-%{api}.typelib
+%{_libdir}/girepository-1.0/GstNetbuffer-%{api}.typelib
+%{_libdir}/girepository-1.0/GstPbutils-%{api}.typelib
+%{_libdir}/girepository-1.0/GstRiff-%{api}.typelib
+%{_libdir}/girepository-1.0/GstRtp-%{api}.typelib
+%{_libdir}/girepository-1.0/GstRtsp-%{api}.typelib
+%{_libdir}/girepository-1.0/GstSdp-%{api}.typelib
+%{_libdir}/girepository-1.0/GstTag-%{api}.typelib
+%{_libdir}/girepository-1.0/GstVideo-%{api}.typelib
+
+%files -n %{develname}
+%doc docs/libs/html docs/plugins/html
+%{_includedir}/gstreamer-%{api}/gst/app/
+%{_includedir}/gstreamer-%{api}/gst/audio
+%{_includedir}/gstreamer-%{api}/gst/cdda/
+%{_includedir}/gstreamer-%{api}/gst/fft
+%{_includedir}/gstreamer-%{api}/gst/interfaces
+%{_includedir}/gstreamer-%{api}/gst/netbuffer
+%{_includedir}/gstreamer-%{api}/gst/pbutils
+%{_includedir}/gstreamer-%{api}/gst/riff
+%{_includedir}/gstreamer-%{api}/gst/rtsp
+%{_includedir}/gstreamer-%{api}/gst/sdp
+%{_includedir}/gstreamer-%{api}/gst/tag/
+%{_includedir}/gstreamer-%{api}/gst/video/
+%{_includedir}/gstreamer-%{api}/gst/floatcast/
+%{_includedir}/gstreamer-%{api}/gst/rtp
+%{_libdir}/pkgconfig/gstreamer-app-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-audio-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-cdda-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-fft-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-floatcast-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-interfaces-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-netbuffer-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-pbutils-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-plugins-base-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-riff-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-rtp-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-rtsp-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-sdp-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-tag-%{api}.pc
+%{_libdir}/pkgconfig/gstreamer-video-%{api}.pc
+%{_libdir}/libgstaudio-%{api}.so
+%{_libdir}/libgstapp-%{api}.so
+%{_libdir}/libgstcdda-%{api}.so
+%{_libdir}/libgstfft-%{api}.so
+%{_libdir}/libgstinterfaces-%{api}.so
+%{_libdir}/libgstnetbuffer-%{api}.so
+%{_libdir}/libgstpbutils-%{api}.so
+%{_libdir}/libgstriff-%{api}.so
+%{_libdir}/libgstrtp-%{api}.so
+%{_libdir}/libgstrtsp-%{api}.so
+%{_libdir}/libgsttag-%{api}.so
+%{_libdir}/libgstsdp-%{api}.so
+%{_libdir}/libgstvideo-%{api}.so
+%{_datadir}/gtk-doc/html/*
+%{_datadir}/gir-1.0/GstApp-%{api}.gir
+%{_datadir}/gir-1.0/GstAudio-%{api}.gir
+%{_datadir}/gir-1.0/GstFft-%{api}.gir
+%{_datadir}/gir-1.0/GstInterfaces-%{api}.gir
+%{_datadir}/gir-1.0/GstNetbuffer-%{api}.gir
+%{_datadir}/gir-1.0/GstPbutils-%{api}.gir
+%{_datadir}/gir-1.0/GstRiff-%{api}.gir
+%{_datadir}/gir-1.0/GstRtp-%{api}.gir
+%{_datadir}/gir-1.0/GstRtsp-%{api}.gir
+%{_datadir}/gir-1.0/GstSdp-%{api}.gir
+%{_datadir}/gir-1.0/GstTag-%{api}.gir
+%{_datadir}/gir-1.0/GstVideo-%{api}.gir
+
+%files -n %{bname}-gnomevfs
+%{_libdir}/gstreamer-%{api}/libgstgnomevfs.so
+
+%files -n %{bname}-cdparanoia
+%{_libdir}/gstreamer-%{api}/libgstcdparanoia.so
+
+%if %{build_libvisual}
+%files -n %{bname}-libvisual
+%{_libdir}/gstreamer-%{api}/libgstlibvisual.so
+%endif
 
