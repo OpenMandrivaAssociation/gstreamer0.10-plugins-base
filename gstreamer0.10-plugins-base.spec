@@ -172,6 +172,7 @@ cd tests/check
 %install
 rm -rf %{buildroot} gst-plugins-base-%{api}.lang
 %makeinstall_std
+find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %find_lang gst-plugins-base-%{api}
 
 %files -f gst-plugins-base-%{api}.lang
