@@ -1,5 +1,4 @@
 %define bname gstreamer0.10
-%define name %{bname}-plugins-base
 
 %define major 0
 %define api 0.10
@@ -18,7 +17,7 @@
 Summary: 	GStreamer Streaming-media framework plug-ins
 Name: 		%{bname}-plugins-base
 Version: 	0.10.35
-Release: 	2
+Release: 	3
 License: 	LGPLv2+
 Group: 		Sound
 URL:		http://gstreamer.freedesktop.org/
@@ -58,6 +57,10 @@ BuildRequires: gtk-doc
 #gw we need some fonts for the tests
 BuildRequires: fonts-ttf-dejavu
 %endif
+
+# md legacy provides, do_not remove until everything 
+# that requires the provide is cleaned up
+Provides: %{bname}-plugins
 Suggests: gst-install-plugins-helper
 Conflicts: %{bname}-plugins-bad < 0.10.10
 
