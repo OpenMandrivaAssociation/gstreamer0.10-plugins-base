@@ -16,8 +16,8 @@
 
 Summary: 	GStreamer Streaming-media framework plug-ins
 Name: 		%{bname}-plugins-base
-Version: 	0.10.35
-Release: 	3
+Version: 	0.10.36
+Release: 	1
 License: 	LGPLv2+
 Group: 		Sound
 URL:		http://gstreamer.freedesktop.org/
@@ -33,7 +33,7 @@ BuildRequires: liborc-devel >= 0.4.5
 BuildRequires: libvorbis-devel
 BuildRequires: libtheora-devel
 BuildRequires: libcheck-devel
-BuildRequires: libgstreamer-devel >= 0.10.34
+BuildRequires: libgstreamer-devel >= 0.10.36
 BuildRequires: libmesaglu-devel
 BuildRequires: libxv-devel
 BuildRequires: libalsa-devel
@@ -182,6 +182,8 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %doc AUTHORS COPYING README NEWS
 %{_bindir}/gst-discoverer-%{api}
 %{_bindir}/gst-visualise-%{api}
+%dir %_datadir/gst-plugins-base
+%_datadir/gst-plugins-base/license-translations.dict
 %{_mandir}/man1/gst-visualise-%{api}.1*
 %{_libdir}/gstreamer-%{api}/libgstffmpegcolorspace.so
 # non-core plugins without external dependencies
