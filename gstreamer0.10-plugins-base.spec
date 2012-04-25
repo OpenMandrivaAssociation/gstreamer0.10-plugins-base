@@ -17,29 +17,29 @@
 Summary: 	GStreamer Streaming-media framework plug-ins
 Name: 		%{bname}-plugins-base
 Version: 	0.10.36
-Release: 	1
+Release: 	2
 License: 	LGPLv2+
 Group: 		Sound
 URL:		http://gstreamer.freedesktop.org/
-Source0: 	ftp://ftp.gnome.org/pub/GNOME/sources/gst-plugins-base/gst-plugins-base-%{version}.tar.xz
+Source0: 	ftp://ftp.gnome.org/pub/GNOME/sources/gst-plugins-base/%{api}/gst-plugins-base-%{version}.tar.xz
 Patch0: 	align.patch
 
-BuildRequires: gtk+2-devel
-BuildRequires: glib2-devel
-BuildRequires: gnome-vfs2-devel > 1.9.4.00
 BuildRequires: libcdda-devel
-BuildRequires: libpng-devel
-BuildRequires: liborc-devel >= 0.4.5
-BuildRequires: libvorbis-devel
-BuildRequires: libtheora-devel
-BuildRequires: libcheck-devel
-BuildRequires: libgstreamer-devel >= 0.10.36
-BuildRequires: libmesaglu-devel
-BuildRequires: libxv-devel
-BuildRequires: libalsa-devel
-BuildRequires: gobject-introspection-devel
+BuildRequires: pkgconfig(alsa)
+BuildRequires: pkgconfig(check)
+BuildRequires: pkgconfig(glib-2.0)
+BuildRequires: pkgconfig(glu)
+BuildRequires: pkgconfig(gnome-vfs-2.0)
+BuildRequires: pkgconfig(gobject-introspection-1.0)
+BuildRequires: pkgconfig(gstreamer-0.10) >= 0.10.36
+BuildRequires: pkgconfig(gtk+-2.0)
+BuildRequires: pkgconfig(libpng)
+BuildRequires: pkgconfig(orc-0.4)
+BuildRequires: pkgconfig(theora)
+BuildRequires: pkgconfig(vorbis)
+BuildRequires: pkgconfig(xv)
 %if %{build_libvisual}
-BuildRequires: libvisual-devel >= 0.4
+BuildRequires: pkgconfig(libvisual-0.4) >= 0.4
 %endif
 %ifarch %ix86
 BuildRequires: nasm => 0.90
@@ -89,7 +89,7 @@ plugins, and helper libraries:
 %package -n %{libname}
 Group: 		System/Libraries
 Summary: 	GStreamer plugin libraries
-Obsoletes:  %mklibname gstreamer-plugins-base0.10
+Obsoletes:	%mklibname gstreamer-plugins-base0.10
 Obsoletes:	%oldlibname
 
 %description -n %{libname}
@@ -97,11 +97,10 @@ This package contain the basic audio and video playback library and
 the interfaces library.
 
 %package -n %{girname}
-Summary:    GObject Introspection interface libraries for %{name}
-Group:      System/Libraries
-Requires:   %{libname} = %{version}-%{release}
-Conflicts:  %mklibname gstreamer-plugins-base 0.10 < 0.10.35-2
-Conflicts:  gir-repository < 0.6.5-3
+Summary:	GObject Introspection interface libraries for %{name}
+Group:		System/Libraries
+Conflicts:	%mklibname gstreamer-plugins-base 0.10 < 0.10.35-2
+Conflicts:	gir-repository < 0.6.5-3
 
 %description -n %{girname}
 GObject Introspection interface libraries for %{name}.
@@ -110,6 +109,7 @@ GObject Introspection interface libraries for %{name}.
 Summary: 	GStreamer Plugin Library Headers
 Group: 		Development/C
 Requires: 	%{libname} = %{version}-%{release}
+Requires: 	%{girname} = %{version}-%{release}
 %if %{enable_check}
 # gw is required at build time for make check
 Requires:	%{name} = %{version}-%{release}
