@@ -3,6 +3,7 @@
 %define major 0
 %define api 0.10
 %define libname		%mklibname gstreamer-plugins-base %{api} %{major}
+%define	rosalib		%mklibname gstreamer-plugins-base %{api}%{major}
 %define develname	%mklibname gstreamer-plugins-base %{api} -d
 %define girname		%mklibname gstreamer-plugins-base-gir %{api}
 
@@ -17,7 +18,7 @@
 Summary: 	GStreamer Streaming-media framework plug-ins
 Name: 		%{bname}-plugins-base
 Version: 	0.10.36
-Release: 	2
+Release: 	4
 License: 	LGPLv2+
 Group: 		Sound
 URL:		http://gstreamer.freedesktop.org/
@@ -91,6 +92,7 @@ Group: 		System/Libraries
 Summary: 	GStreamer plugin libraries
 Obsoletes:	%mklibname gstreamer-plugins-base0.10
 Obsoletes:	%oldlibname
+%rename		%{rosalib}
 
 %description -n %{libname}
 This package contain the basic audio and video playback library and
