@@ -3,7 +3,7 @@
 %define major 0
 %define api 0.10
 %define libname		%mklibname gstreamer-plugins-base %{api} %{major}
-%define	rosalib		%mklibname gstreamer-plugins-base %{api}%{major}
+%define	rosalib		%mklibname gstreamer-plugins-base %{api}
 %define develname	%mklibname gstreamer-plugins-base %{api} -d
 %define girname		%mklibname gstreamer-plugins-base-gir %{api}
 
