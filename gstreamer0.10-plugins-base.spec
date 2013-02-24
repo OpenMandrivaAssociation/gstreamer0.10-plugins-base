@@ -161,8 +161,8 @@ GStreamer applications.
 	--disable-static \
 	--disable-dependency-tracking \
 	--enable-experimental \
-	--with-package-name='Mandriva %{name} package' \
-	--with-package-origin='http://www.mandriva.com/' \
+	--with-package-name='%{vendor} %{name} package' \
+	--with-package-origin='%{disturl}' \
 	--enable-libvisual
 
 %make
