@@ -35,7 +35,7 @@ BuildRequires:	nasm => 0.90
 %endif
 BuildRequires:	libcheck-devel
 BuildRequires:	valgrind
-BuildRequires:	gstreamer-devel >= %{gstver}
+BuildRequires:	gstreamer0.10-devel >= %{gstver}
 BuildRequires:	gtk-doc
 BuildRequires:	mesaglu-devel
 BuildRequires:	libxv-devel
