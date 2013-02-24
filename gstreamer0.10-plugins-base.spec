@@ -13,10 +13,10 @@
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		%{bname}-plugins-base
 Version:	0.10.36
-Release:	1
+Release:	3
 License:	LGPLv2+
 Group:		Sound
-Source:		ftp://ftp.gnome.org/pub/GNOME/sources/gst-plugins-base/0.10/gst-plugins-base-%{version}.tar.xz
+Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/gst-plugins-base/0.10/gst-plugins-base-%{version}.tar.xz
 Patch0:		align.patch
 URL:		http://gstreamer.freedesktop.org/
 Provides:	%{bname}-plugin-libs = %{EVRD}
