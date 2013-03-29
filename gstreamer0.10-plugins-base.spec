@@ -2,10 +2,10 @@
 
 %define major 0
 %define api 0.10
-%define libname		%mklibname gstreamer-plugins-base %{api} %{major}
-%define	rosalib		%mklibname gstreamer-plugins-base %{api}
-%define develname	%mklibname gstreamer-plugins-base %{api} -d
-%define girname		%mklibname gstreamer-plugins-base-gir %{api}
+%define libname %mklibname gstreamer-plugins-base %{api} %{major}
+%define rosalib %mklibname gstreamer-plugins-base %{api}
+%define develname %mklibname gstreamer-plugins-base %{api} -d
+%define girname %mklibname gstreamer-plugins-base-gir %{api}
 
 %define oldlibname  %mklibname gstapp0.10_ 0
 %define olddevelname %mklibname -d gstapp0.10_ 0
@@ -15,55 +15,55 @@
 %define build_qtexamples 0
 %define enable_check 0
 
-Summary: 	GStreamer Streaming-media framework plug-ins
-Name: 		%{bname}-plugins-base
-Version: 	0.10.36
-Release: 	4
-License: 	LGPLv2+
-Group: 		Sound
+Summary:	GStreamer Streaming-media framework plug-ins
+Name:		%{bname}-plugins-base
+Version:	0.10.36
+Release:	5
+License:	LGPLv2+
+Group:		Sound
 URL:		http://gstreamer.freedesktop.org/
-Source0: 	ftp://ftp.gnome.org/pub/GNOME/sources/gst-plugins-base/%{api}/gst-plugins-base-%{version}.tar.xz
-Patch0: 	align.patch
+Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/gst-plugins-base/%{api}/gst-plugins-base-%{version}.tar.xz
+Patch0:		align.patch
 
-BuildRequires: libcdda-devel
-BuildRequires: pkgconfig(alsa)
-BuildRequires: pkgconfig(check)
-BuildRequires: pkgconfig(glib-2.0)
-BuildRequires: pkgconfig(glu)
-BuildRequires: pkgconfig(gnome-vfs-2.0)
-BuildRequires: pkgconfig(gobject-introspection-1.0)
-BuildRequires: pkgconfig(gstreamer-0.10) >= 0.10.36
-BuildRequires: pkgconfig(gtk+-2.0)
-BuildRequires: pkgconfig(libpng)
-BuildRequires: pkgconfig(orc-0.4)
-BuildRequires: pkgconfig(theora)
-BuildRequires: pkgconfig(vorbis)
-BuildRequires: pkgconfig(xv)
+BuildRequires:	cdda-devel
+BuildRequires:	pkgconfig(alsa)
+BuildRequires:	pkgconfig(check)
+BuildRequires:	pkgconfig(glib-2.0)
+BuildRequires:	pkgconfig(glu)
+BuildRequires:	pkgconfig(gnome-vfs-2.0)
+BuildRequires:	pkgconfig(gobject-introspection-1.0)
+BuildRequires:	pkgconfig(gstreamer-0.10) >= 0.10.36
+BuildRequires:	pkgconfig(gtk+-2.0)
+BuildRequires:	pkgconfig(libpng)
+BuildRequires:	pkgconfig(orc-0.4)
+BuildRequires:	pkgconfig(theora)
+BuildRequires:	pkgconfig(vorbis)
+BuildRequires:	pkgconfig(xv)
 %if %{build_libvisual}
-BuildRequires: pkgconfig(libvisual-0.4) >= 0.4
+BuildRequires:	pkgconfig(libvisual-0.4) >= 0.4
 %endif
 %ifarch %ix86
-BuildRequires: nasm => 0.90
+BuildRequires:	nasm => 0.90
 %endif
 %ifnarch %arm %mips
-BuildRequires: valgrind
+BuildRequires:	valgrind
 %endif
 %if %{build_qtexamples}
 BuildRequires:	qt4-devel
 %endif
 %if %{build_docs}
-BuildRequires: gtk-doc
+BuildRequires:	gtk-doc
 %endif
 %if %{enable_check}
 #gw we need some fonts for the tests
-BuildRequires: fonts-ttf-dejavu
+BuildRequires:	fonts-ttf-dejavu
 %endif
 
 # md legacy provides, do_not remove until everything 
 # that requires the provide is cleaned up
-Provides: %{bname}-plugins
-Suggests: gst-install-plugins-helper
-Conflicts: %{bname}-plugins-bad < 0.10.10
+Provides:	%{bname}-plugins
+Suggests:	gst-install-plugins-helper
+Conflicts:	%{bname}-plugins-bad < 0.10.10
 
 %description
 GStreamer is a streaming-media framework, based on graphs of filters which
@@ -88,8 +88,8 @@ plugins, and helper libraries:
  * aggregate elements: decodebin, playbin
 
 %package -n %{libname}
-Group: 		System/Libraries
-Summary: 	GStreamer plugin libraries
+Group:		System/Libraries
+Summary:	GStreamer plugin libraries
 Obsoletes:	%mklibname gstreamer-plugins-base0.10
 Obsoletes:	%oldlibname
 %rename		%{rosalib}
@@ -108,10 +108,10 @@ Conflicts:	gir-repository < 0.6.5-3
 GObject Introspection interface libraries for %{name}.
 
 %package -n %{develname}
-Summary: 	GStreamer Plugin Library Headers
-Group: 		Development/C
-Requires: 	%{libname} = %{version}-%{release}
-Requires: 	%{girname} = %{version}-%{release}
+Summary:	GStreamer Plugin Library Headers
+Group:		Development/C
+Requires:	%{libname} = %{version}-%{release}
+Requires:	%{girname} = %{version}-%{release}
 %if %{enable_check}
 # gw is required at build time for make check
 Requires:	%{name} = %{version}-%{release}
@@ -128,7 +128,7 @@ GStreamer support libraries header files.
 Summary:	GStreamer plug-ins for GNOME VFS input and output
 Group:		System/Libraries
 Requires:	gnome-vfs2 > 1.9.4.00
-Requires: 	%{name} = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description -n %{bname}-gnomevfs
 Plug-Ins for reading and writing through GNOME VFS.
@@ -181,7 +181,7 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %find_lang gst-plugins-base-%{api}
 
 %files -f gst-plugins-base-%{api}.lang
-%doc AUTHORS COPYING README NEWS
+%doc AUTHORS README NEWS
 %{_bindir}/gst-discoverer-%{api}
 %{_bindir}/gst-visualise-%{api}
 %dir %_datadir/gst-plugins-base
