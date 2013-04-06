@@ -18,7 +18,7 @@
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		%{bname}-plugins-base
 Version:	0.10.36
-Release:	5
+Release:	6
 License:	LGPLv2+
 Group:		Sound
 URL:		http://gstreamer.freedesktop.org/
@@ -159,7 +159,6 @@ GStreamer applications.
 %build
 %configure2_5x \
 	--disable-static \
-	--disable-dependency-tracking \
 	--enable-experimental \
 	--with-package-name='%{vendor} %{name} package' \
 	--with-package-origin='%{disturl}' \
@@ -175,9 +174,8 @@ cd tests/check
 %endif
 
 %install
-rm -rf %{buildroot} gst-plugins-base-%{api}.lang
 %makeinstall_std
-find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
+
 %find_lang gst-plugins-base-%{api}
 
 %files -f gst-plugins-base-%{api}.lang
