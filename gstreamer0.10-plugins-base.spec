@@ -1,14 +1,11 @@
-%define bname gstreamer0.10
-
-%define major 0
-%define api 0.10
+%define oname	gst-plugins-base
+%define bname	gstreamer%{api}
+%define api	0.10
+%define major	0
 %define libname %mklibname gstreamer-plugins-base %{api} %{major}
-%define rosalib %mklibname gstreamer-plugins-base %{api}
-%define develname %mklibname gstreamer-plugins-base %{api} -d
+%define devname %mklibname gstreamer-plugins-base %{api} -d
 %define girname %mklibname gstreamer-plugins-base-gir %{api}
-
-%define oldlibname  %mklibname gstapp0.10_ 0
-%define olddevelname %mklibname -d gstapp0.10_ 0
+%define rosalib %mklibname gstreamer-plugins-base %{api}
 
 %define build_libvisual 1
 %define build_docs 0
@@ -21,8 +18,8 @@ Version:	0.10.36
 Release:	7
 License:	LGPLv2+
 Group:		Sound
-URL:		http://gstreamer.freedesktop.org/
-Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/gst-plugins-base/%{api}/gst-plugins-base-%{version}.tar.xz
+Url:		http://gstreamer.freedesktop.org/
+Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/gst-plugins-base/%{api}/%{oname}-%{version}.tar.xz
 Patch0:		align.patch
 
 BuildRequires:	cdda-devel
@@ -91,7 +88,6 @@ plugins, and helper libraries:
 Group:		System/Libraries
 Summary:	GStreamer plugin libraries
 Obsoletes:	%mklibname gstreamer-plugins-base0.10
-Obsoletes:	%oldlibname
 %rename		%{rosalib}
 
 %description -n %{libname}
@@ -102,12 +98,11 @@ the interfaces library.
 Summary:	GObject Introspection interface libraries for %{name}
 Group:		System/Libraries
 Conflicts:	%mklibname gstreamer-plugins-base 0.10 < 0.10.35-2
-Conflicts:	gir-repository < 0.6.5-3
 
 %description -n %{girname}
 GObject Introspection interface libraries for %{name}.
 
-%package -n %{develname}
+%package -n %{devname}
 Summary:	GStreamer Plugin Library Headers
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
@@ -116,12 +111,9 @@ Requires:	%{girname} = %{version}-%{release}
 # gw is required at build time for make check
 Requires:	%{name} = %{version}-%{release}
 %endif
-Provides:	libgstreamer-plugins-base-devel = %{version}-%{release}
-Provides:	libgstreamer%{api}-plugins-base-devel = %{version}-%{release}
-Conflicts:	gir-repository < 0.6.5-3
-Obsoletes:	%olddevelname
+Provides:	%{name}-devel = %{version}-%{release}
 
-%description -n %{develname}
+%description -n %{devname}
 GStreamer support libraries header files.
 
 %package -n %{bname}-gnomevfs
@@ -153,7 +145,7 @@ GStreamer applications.
 %endif
 
 %prep
-%setup -qn gst-plugins-base-%{version}
+%setup -qn %{oname}-%{version}
 %apply_patches
 
 %build
@@ -176,14 +168,14 @@ cd tests/check
 %install
 %makeinstall_std
 
-%find_lang gst-plugins-base-%{api}
+%find_lang %{oname}-%{api}
 
-%files -f gst-plugins-base-%{api}.lang
+%files -f %{oname}-%{api}.lang
 %doc AUTHORS README NEWS
 %{_bindir}/gst-discoverer-%{api}
 %{_bindir}/gst-visualise-%{api}
-%dir %_datadir/gst-plugins-base
-%_datadir/gst-plugins-base/license-translations.dict
+%dir %{_datadir}/gst-plugins-base
+%{_datadir}/gst-plugins-base/license-translations.dict
 %{_mandir}/man1/gst-visualise-%{api}.1*
 %{_libdir}/gstreamer-%{api}/libgstffmpegcolorspace.so
 # non-core plugins without external dependencies
@@ -246,7 +238,7 @@ cd tests/check
 %{_libdir}/girepository-1.0/GstTag-%{api}.typelib
 %{_libdir}/girepository-1.0/GstVideo-%{api}.typelib
 
-%files -n %{develname}
+%files -n %{devname}
 %doc docs/libs/html docs/plugins/html
 %{_includedir}/gstreamer-%{api}/gst/app/
 %{_includedir}/gstreamer-%{api}/gst/audio
