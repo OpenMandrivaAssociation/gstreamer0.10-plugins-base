@@ -2,6 +2,32 @@
 %define bname	gstreamer%{api}
 %define api	0.10
 %define major	0
+%define libapp %mklibname gstapp %{api} %{major}
+%define girapp %mklibname gstapp-gir %{api}
+%define libaudio %mklibname gstaudio %{api} %{major}
+%define giraudio %mklibname gstaudio-gir %{api}
+%define libcdda	%mklibname gstcdda %{api} %{major}
+%define libfft %mklibname gstfft %{api} %{major}
+%define girfft %mklibname gstfft-gir %{api}
+%define libinterfaces	%mklibname gstinterfaces %{api} %{major}
+%define girinterfaces	%mklibname gstinterfaces-gir %{api}
+%define libnetbuffer	%mklibname gstnetbuffer %{api} %{major}
+%define girnetbuffer	%mklibname gstnetbuffer-gir %{api}
+%define libpbutils %mklibname gstpbutils %{api} %{major}
+%define girpbutils %mklibname gstpbutils-gir %{api}
+%define libriff %mklibname gstriff %{api} %{major}
+%define girriff %mklibname gstriff-gir %{api}
+%define librtp %mklibname gstrtp %{api} %{major}
+%define girrtp %mklibname gstrtp-gir %{api}
+%define librtsp %mklibname gstrtsp %{api} %{major}
+%define girrtsp %mklibname gstrtsp-gir %{api}
+%define libsdp %mklibname gstsdp %{api} %{major}
+%define girsdp %mklibname gstsdp-gir %{api}
+%define libtag %mklibname gsttag %{api} %{major}
+%define girtag %mklibname gsttag-gir %{api}
+%define libvideo %mklibname gstvideo %{api} %{major}
+%define girvideo %mklibname gstvideo-gir %{api}
+
 %define libname %mklibname gstreamer-plugins-base %{api} %{major}
 %define devname %mklibname gstreamer-plugins-base %{api} -d
 %define girname %mklibname gstreamer-plugins-base-gir %{api}
@@ -15,12 +41,12 @@
 Summary:	GStreamer Streaming-media framework plug-ins
 Name:		%{bname}-plugins-base
 Version:	0.10.36
-Release:	7
+Release:	8
 License:	LGPLv2+
 Group:		Sound
 Url:		http://gstreamer.freedesktop.org/
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/gst-plugins-base/%{api}/%{oname}-%{version}.tar.xz
-Patch0:		align.patch
+Patch0:	align.patch
 
 BuildRequires:	cdda-devel
 BuildRequires:	pkgconfig(alsa)
@@ -72,41 +98,249 @@ plug-ins.
 
 This package contains a set of reference plugins, base classes for other
 plugins, and helper libraries:
- * device plugins: x(v)imagesink, alsa, v4lsrc, cdparanoia
- * containers: ogg
- * codecs: vorbis, theora
- * text: textoverlay, subparse
- * sources: audiotestsrc, videotestsrc, gnomevfssrc
- * network: tcp
+ * device plugins:	x(v)imagesink, alsa, v4lsrc, cdparanoia
+ * containers:	ogg
+ * codecs:	vorbis, theora
+ * text:	textoverlay, subparse
+ * sources:	audiotestsrc, videotestsrc, gnomevfssrc
+ * network:	tcp
  * typefind
- * audio processing: audioconvert, adder, audiorate, audioscale, volume
- * visualisation: libvisual
- * video processing: ffmpegcolorspace
- * aggregate elements: decodebin, playbin
+ * audio processing:	audioconvert, adder, audiorate, audioscale, volume
+ * visualisation:	libvisual
+ * video processing:	ffmpegcolorspace
+ * aggregate elements:	decodebin, playbin
 
-%package -n %{libname}
+%package -n %{libapp}
 Group:		System/Libraries
 Summary:	GStreamer plugin libraries
+Obsoletes:	%{_lib}gstreamer-plugins-base0.10_0 < 0.10.36-8
 Obsoletes:	%mklibname gstreamer-plugins-base0.10
 %rename		%{rosalib}
 
-%description -n %{libname}
-This package contain the basic audio and video playback library and
-the interfaces library.
+%description -n %{libapp}
+This package contain a shared library for %{name}.
 
-%package -n %{girname}
-Summary:	GObject Introspection interface libraries for %{name}
+%package -n %{girapp}
+Summary:	GObject Introspection interface libraries for %{libapp}
 Group:		System/Libraries
+Obsoletes:	%{_lib}gstreamer-plugins-base-gir0.10 < 0.10.36-8
 Conflicts:	%mklibname gstreamer-plugins-base 0.10 < 0.10.35-2
 
-%description -n %{girname}
-GObject Introspection interface libraries for %{name}.
+%description -n %{girapp}
+GObject Introspection interface libraries for %{libapp}.
+
+%package -n %{libaudio}
+Group:		System/Libraries
+Summary:	GStreamer plugin libraries
+Obsoletes:	%{_lib}gstreamer-plugins-base0.10_0 < 0.10.36-8
+
+%description -n %{libaudio}
+This package contain a shared library for %{name}.
+
+%package -n %{giraudio}
+Summary:	GObject Introspection interface libraries for %{libaudio}
+Group:		System/Libraries
+Obsoletes:	%{_lib}gstreamer-plugins-base-gir0.10 < 0.10.36-8
+
+%description -n %{giraudio}
+GObject Introspection interface libraries for %{libaudio}.
+
+%package -n %{libcdda}
+Group:		System/Libraries
+Summary:	GStreamer plugin libraries
+Obsoletes:	%{_lib}gstreamer-plugins-base0.10_0 < 0.10.36-8
+
+%description -n %{libcdda}
+This package contain a shared library for %{name}.
+
+%package -n %{libfft}
+Group:		System/Libraries
+Summary:	GStreamer plugin libraries
+Obsoletes:	%{_lib}gstreamer-plugins-base0.10_0 < 0.10.36-8
+
+%description -n %{libfft}
+This package contain a shared library for %{name}.
+
+%package -n %{girfft}
+Summary:	GObject Introspection interface libraries for %{libfft}
+Group:		System/Libraries
+Obsoletes:	%{_lib}gstreamer-plugins-base-gir0.10 < 0.10.36-8
+
+%description -n %{girfft}
+GObject Introspection interface libraries for %{libfft}.
+
+%package -n %{libinterfaces}
+Group:		System/Libraries
+Summary:	GStreamer plugin libraries
+Obsoletes:	%{_lib}gstreamer-plugins-base0.10_0 < 0.10.36-8
+
+%description -n %{libinterfaces}
+This package contain a shared library for %{name}.
+
+%package -n %{girinterfaces}
+Summary:	GObject Introspection interface libraries for %{libfft}
+Group:		System/Libraries
+Obsoletes:	%{_lib}gstreamer-plugins-base-gir0.10 < 0.10.36-8
+
+%description -n %{girinterfaces}
+GObject Introspection interface libraries for %{libinterfaces}.
+
+%package -n %{libnetbuffer}
+Group:		System/Libraries
+Summary:	GStreamer plugin libraries
+Obsoletes:	%{_lib}gstreamer-plugins-base0.10_0 < 0.10.36-8
+
+%description -n %{libnetbuffer}
+This package contain a shared library for %{name}.
+
+%package -n %{girnetbuffer}
+Summary:	GObject Introspection interface libraries for %{libfft}
+Group:		System/Libraries
+Obsoletes:	%{_lib}gstreamer-plugins-base-gir0.10 < 0.10.36-8
+
+%description -n %{girnetbuffer}
+GObject Introspection interface libraries for %{libnetbuffer}.
+
+%package -n %{libpbutils}
+Group:		System/Libraries
+Summary:	GStreamer plugin libraries
+Obsoletes:	%{_lib}gstreamer-plugins-base0.10_0 < 0.10.36-8
+
+%description -n %{libpbutils}
+This package contain a shared library for %{name}.
+
+%package -n %{girpbutils}
+Summary:	GObject Introspection interface libraries for %{libpbutils}
+Group:		System/Libraries
+Obsoletes:	%{_lib}gstreamer-plugins-base-gir0.10 < 0.10.36-8
+
+%description -n %{girpbutils}
+GObject Introspection interface libraries for %{libpbutils}.
+
+%package -n %{libriff}
+Group:		System/Libraries
+Summary:	GStreamer plugin libraries
+Obsoletes:	%{_lib}gstreamer-plugins-base0.10_0 < 0.10.36-8
+
+%description -n %{libriff}
+This package contain a shared library for %{name}.
+
+%package -n %{girriff}
+Summary:	GObject Introspection interface libraries for %{libriff}
+Group:		System/Libraries
+Obsoletes:	%{_lib}gstreamer-plugins-base-gir0.10 < 0.10.36-8
+
+%description -n %{girriff}
+GObject Introspection interface libraries for %{libriff}.
+
+%package -n %{librtp}
+Group:		System/Libraries
+Summary:	GStreamer plugin libraries
+Obsoletes:	%{_lib}gstreamer-plugins-base0.10_0 < 0.10.36-8
+
+%description -n %{librtp}
+This package contain a shared library for %{name}.
+
+%package -n %{girrtp}
+Summary:	GObject Introspection interface libraries for %{librtp}
+Group:		System/Libraries
+Obsoletes:	%{_lib}gstreamer-plugins-base-gir0.10 < 0.10.36-8
+
+%description -n %{girrtp}
+GObject Introspection interface libraries for %{librtp}.
+
+%package -n %{librtsp}
+Group:		System/Libraries
+Summary:	GStreamer plugin libraries
+Obsoletes:	%{_lib}gstreamer-plugins-base0.10_0 < 0.10.36-8
+
+%description -n %{librtsp}
+This package contain a shared library for %{name}.
+
+%package -n %{girrtsp}
+Summary:	GObject Introspection interface libraries for %{librtsp}
+Group:		System/Libraries
+Obsoletes:	%{_lib}gstreamer-plugins-base-gir0.10 < 0.10.36-8
+
+%description -n %{girrtsp}
+GObject Introspection interface libraries for %{librtsp}.
+
+%package -n %{libsdp}
+Group:		System/Libraries
+Summary:	GStreamer plugin libraries
+Obsoletes:	%{_lib}gstreamer-plugins-base0.10_0 < 0.10.36-8
+
+%description -n %{libsdp}
+This package contain a shared library for %{name}.
+
+%package -n %{girsdp}
+Summary:	GObject Introspection interface libraries for %{libsdp}
+Group:		System/Libraries
+Obsoletes:	%{_lib}gstreamer-plugins-base-gir0.10 < 0.10.36-8
+
+%description -n %{girsdp}
+GObject Introspection interface libraries for %{libsdp}.
+
+%package -n %{libtag}
+Group:		System/Libraries
+Summary:	GStreamer plugin libraries
+Obsoletes:	%{_lib}gstreamer-plugins-base0.10_0 < 0.10.36-8
+
+%description -n %{libtag}
+This package contain a shared library for %{name}.
+
+%package -n %{girtag}
+Summary:	GObject Introspection interface libraries for %{libtag}
+Group:		System/Libraries
+Obsoletes:	%{_lib}gstreamer-plugins-base-gir0.10 < 0.10.36-8
+
+%description -n %{girtag}
+GObject Introspection interface libraries for %{libtag}.
+
+%package -n %{libvideo}
+Group:		System/Libraries
+Summary:	GStreamer plugin libraries
+Obsoletes:	%{_lib}gstreamer-plugins-base0.10_0 < 0.10.36-8
+
+%description -n %{libvideo}
+This package contain a shared library for %{name}.
+
+%package -n %{girvideo}
+Summary:	GObject Introspection interface libraries for %{libvideo}
+Group:		System/Libraries
+Obsoletes:	%{_lib}gstreamer-plugins-base0.10_0 < 0.10.36-8
+
+%description -n %{girvideo}
+GObject Introspection interface libraries for %{libvideo}.
 
 %package -n %{devname}
 Summary:	GStreamer Plugin Library Headers
 Group:		Development/C
-Requires:	%{libname} = %{version}-%{release}
-Requires:	%{girname} = %{version}-%{release}
+Requires:   %{libapp} = %{version}-%{release}
+Requires:   %{girapp} = %{version}-%{release}
+Requires:   %{libaudio} = %{version}-%{release}
+Requires:   %{giraudio} = %{version}-%{release}
+Requires:   %{libcdda} = %{version}-%{release}
+Requires:   %{libfft} = %{version}-%{release}
+Requires:   %{girfft} = %{version}-%{release}
+Requires:   %{libinterfaces} = %{version}-%{release}
+Requires:   %{girinterfaces} = %{version}-%{release}
+Requires:   %{libnetbuffer} = %{version}-%{release}
+Requires:   %{girnetbuffer} = %{version}-%{release}
+Requires:   %{libpbutils} = %{version}-%{release}
+Requires:   %{girpbutils} = %{version}-%{release}
+Requires:   %{libriff} = %{version}-%{release}
+Requires:   %{girriff} = %{version}-%{release}
+Requires:   %{librtp} = %{version}-%{release}
+Requires:   %{girrtp} = %{version}-%{release}
+Requires:   %{librtsp} = %{version}-%{release}
+Requires:   %{girrtsp} = %{version}-%{release}
+Requires:   %{libsdp} = %{version}-%{release}
+Requires:   %{girsdp} = %{version}-%{release}
+Requires:   %{libtag} = %{version}-%{release}
+Requires:   %{girtag} = %{version}-%{release}
+Requires:   %{girvideo} = %{version}-%{release}
+Requires:   %{libvideo} = %{version}-%{release}
 %if %{enable_check}
 # gw is required at build time for make check
 Requires:	%{name} = %{version}-%{release}
@@ -114,7 +348,7 @@ Requires:	%{name} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
 
 %description -n %{devname}
-GStreamer support libraries header files.
+This package contains the development files for %{name}.
 
 %package -n %{bname}-gnomevfs
 Summary:	GStreamer plug-ins for GNOME VFS input and output
@@ -209,33 +443,79 @@ cd tests/check
 %{_libdir}/gstreamer-%{api}/libgstxvimagesink.so
 %{_libdir}/gstreamer-%{api}/libgstalsa.so
 
-%files -n %{libname}
-%{_libdir}/libgstaudio-%{api}.so.%{major}*
+%files -n %{libapp}
 %{_libdir}/libgstapp-%{api}.so.%{major}*
+
+%files -n %{libaudio}
+%{_libdir}/libgstaudio-%{api}.so.%{major}*
+
+%files -n %{libcdda}
 %{_libdir}/libgstcdda-%{api}.so.%{major}*
+
+%files -n %{libfft}
 %{_libdir}/libgstfft-%{api}.so.%{major}*
+
+%files -n %{libinterfaces}
 %{_libdir}/libgstinterfaces-%{api}.so.%{major}*
+
+%files -n %{libnetbuffer}
 %{_libdir}/libgstnetbuffer-%{api}.so.%{major}*
+
+%files -n %{libpbutils}
 %{_libdir}/libgstpbutils-%{api}.so.%{major}*
+
+%files -n %{libriff}
 %{_libdir}/libgstriff-%{api}.so.%{major}*
+
+%files -n %{librtp}
 %{_libdir}/libgstrtp-%{api}.so.%{major}*
+
+%files -n %{librtsp}
 %{_libdir}/libgstrtsp-%{api}.so.%{major}*
-%{_libdir}/libgsttag-%{api}.so.%{major}*
+
+%files -n %{libsdp}
 %{_libdir}/libgstsdp-%{api}.so.%{major}*
+
+%files -n %{libtag}
+%{_libdir}/libgsttag-%{api}.so.%{major}*
+
+%files -n %{libvideo}
 %{_libdir}/libgstvideo-%{api}.so.%{major}*
 
-%files -n %{girname}
+%files -n %{girapp}
 %{_libdir}/girepository-1.0/GstApp-%{api}.typelib
+
+%files -n %{giraudio}
 %{_libdir}/girepository-1.0/GstAudio-%{api}.typelib
+
+%files -n %{girfft}
 %{_libdir}/girepository-1.0/GstFft-%{api}.typelib
+
+%files -n %{girinterfaces}
 %{_libdir}/girepository-1.0/GstInterfaces-%{api}.typelib
+
+%files -n %{girnetbuffer}
 %{_libdir}/girepository-1.0/GstNetbuffer-%{api}.typelib
+
+%files -n %{girpbutils}
 %{_libdir}/girepository-1.0/GstPbutils-%{api}.typelib
+
+%files -n %{girriff}
 %{_libdir}/girepository-1.0/GstRiff-%{api}.typelib
+
+%files -n %{girrtp}
 %{_libdir}/girepository-1.0/GstRtp-%{api}.typelib
+
+%files -n %{girrtsp}
 %{_libdir}/girepository-1.0/GstRtsp-%{api}.typelib
+
+%files -n %{girsdp}
 %{_libdir}/girepository-1.0/GstSdp-%{api}.typelib
+
+%files -n %{girtag}
 %{_libdir}/girepository-1.0/GstTag-%{api}.typelib
+
+%files -n %{girvideo}
 %{_libdir}/girepository-1.0/GstVideo-%{api}.typelib
 
 %files -n %{devname}
