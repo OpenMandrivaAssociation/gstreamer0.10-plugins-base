@@ -69,7 +69,7 @@ BuildRequires:	pkgconfig(libvisual-0.4) >= 0.4
 %ifarch %ix86
 BuildRequires:	nasm => 0.90
 %endif
-%ifnarch %arm %mips
+%ifnarch %arm %mips aarch64
 BuildRequires:	valgrind
 %endif
 %if %{build_qtexamples}
