@@ -384,6 +384,11 @@ GStreamer applications.
 %apply_patches
 
 %build
+%ifarch %ix86
+export CC=gcc
+export CXX=g++
+%endif
+
 %configure2_5x \
 	--disable-static \
 	--enable-experimental \
