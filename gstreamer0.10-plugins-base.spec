@@ -48,7 +48,8 @@ Url:		http://gstreamer.freedesktop.org/
 Source0:	ftp://ftp.gnome.org/pub/GNOME/sources/gst-plugins-base/%{api}/%{oname}-%{version}.tar.xz
 Patch0:	align.patch
 Patch1: gst-plugins-base-0.10.36-c++11-header-compatibility.patch
-
+Patch2:	0001-audioresample-Fix-build-on-x86-if-emmintrin.h-is-ava.patch
+Patch3:	0002-audioresample-It-s-HAVE_EMMINTRIN_H-not-HAVE_XMMINTR.patch
 BuildRequires:	cdda-devel
 BuildRequires:	pkgconfig(alsa)
 BuildRequires:	pkgconfig(check)
